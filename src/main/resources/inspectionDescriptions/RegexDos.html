@@ -1,0 +1,27 @@
+<html>
+<body>
+<b>Momo 1005:</b> 正则表达式拒绝服务攻击(RegexDos) <br>
+<br>
+<p>当编写的正则表达式存在缺陷时, 攻击者可以构造特殊的字符串来大量消耗系统资源，造成服务中断或停止。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">Regex: <b style="color: #d9534f;">([a-z]+)+</b></p>
+<p style="font-size: 10px;">Regex: <b style="color: #d9534f;">(.*[a-z]){n} n >= 10</b></p>
+<br>
+<p style="font-size: 10px;color: #629460;">推荐方法:</p>
+<p style="font-size: 10px;">(1) 优化Regex语句</p>
+<p style="font-size: 10px;">(2) 换用RE2/J线性时间复杂度引擎</p>
+<pre>
+<b style="color: #629460;">com.google.re2j.Pattern</b> p = com.google.re2j.Pattern.compile(REGEX);
+<b style="color: #629460;">com.google.re2j.Matcher</b> m = p.matcher(request.getParameter("input"));
+</pre>
+
+<hr>
+<references style="font-size: 7px;">
+    <p>参考资料:</p>
+    <p>OWASP:<a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">Regular expression Denial of Service - ReDoS</a>.</p>
+    <p>Regular-Expressions.info:<a href="https://www.regular-expressions.info/redos.html">Preventing Regular Expression Denial of Service (ReDoS)</a>.</p>
+    <p><a href="https://github.com/google/re2j">RE2/J: linear time regular expression matching in Java</a>.</p>
+</references>
+</body>
+</html>

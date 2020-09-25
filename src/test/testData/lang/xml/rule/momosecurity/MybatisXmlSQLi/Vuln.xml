@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.immomo.im.admin.dao.mysql.MenuMapper">
+
+    <select id="select_nosqli_1" resultType="string">
+        select distinct ${var} from table
+    </select>
+
+    <select id="select_nosqli_2" resultMap="string">
+        select * from ${table}
+    </select>
+
+    <select id="select_nosqli_3" resultMap="string">
+        select * from table where ${var} = 1
+    </select>
+
+    <select id="select_nosqli_4" resultType="string">
+        select * from table order by ${var}
+    </select>
+
+    <select id="select_nosqli_5" resultType="string">
+        select age,count(1) from table group by ${var}
+    </select>
+
+    <sql id="template_nosqli_6">
+        ${prefix}Table
+    </sql>
+
+    <insert id="insert_nosqli_1">
+        Insert into ${table} values(1,2,3)
+    </insert>
+
+    <insert id="insert_nosqli_2">
+        INSERT into table(id, ${var}) values(1, "foo")
+    </insert>
+
+    <select id="select_sqli_1" resultType="string"><error descr="MomoSec: Mybatis XML SQL注入漏洞">
+        select * from table where id in (${ids})
+        </error><if test="status != null"><error descr="MomoSec: Mybatis XML SQL注入漏洞">
+            and status = ${status}
+        </error></if>
+    </select>
+
+    <update id="update_sqli_1">
+        <foreach collection="menus" item="menuItem" separator=";"><error descr="MomoSec: Mybatis XML SQL注入漏洞">
+            update table set sort = ${menuItem.sort} where menuId = ${menuItem.menuId}
+        </error></foreach>
+    </update>
+
+</mapper>

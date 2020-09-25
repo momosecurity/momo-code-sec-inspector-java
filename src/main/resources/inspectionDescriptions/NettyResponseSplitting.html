@@ -1,0 +1,15 @@
+<html>
+<body>
+<b>Momo 1008:</b> Netty响应拆分攻击 <br>
+<br>
+<p>在缺乏有效性验证情况下，攻击者利用该漏洞将CR/LF字符插入到相应字段，从而拆分响应体实现攻击。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">private final DefaultHttpHeaders badHeaders = new DefaultHttpHeaders(<b style="color: #d9534f;">false</b>);</p>
+<p style="font-size: 10px;">private final DefaultHttpResponse badResponse = new DefaultHttpResponse(version, httpResponseStatus, <b style="color: #d9534f;">false</b>);</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">private final DefaultHttpHeaders goodHeaders = new DefaultHttpHeaders();</p>
+<p style="font-size: 10px;">private final DefaultHttpResponse goodResponse = new DefaultHttpResponse(version, httpResponseStatus);</p>
+</body>
+</html>

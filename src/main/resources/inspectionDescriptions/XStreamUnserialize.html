@@ -1,0 +1,20 @@
+<html>
+<body>
+<b>Momo 1011:</b> XStream反序列化风险 <br>
+<br>
+<p>攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<pre>
+XStream.setupDefaultSecurity({xStreamVar});
+</pre>
+<br>
+<p>注意: 使用static修饰变量时，应在当前类的static{}中调用XStream.setupDefaultSecurity().</p>
+<br>
+<hr>
+<references style="font-size: 7px;">
+    <p>参考资料:</p>
+    <p><a href="http://x-stream.github.io/changes.html#1.4.11">XStream官方公告</a></p>
+</references>
+</body>
+</html>

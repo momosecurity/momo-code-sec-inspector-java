@@ -1,0 +1,15 @@
+<html>
+<body>
+<b>Momo 1009:</b> 固定的随机数种子风险 <br>
+<br>
+<p>在伪随机数生成器下使用固定的种子可能造成随机数被预测的风险。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">SecureRandom prng = new SecureRandom();</p>
+<p style="font-size: 10px;">prng.setSeed(<b style="color: #d9534f;">12345L</b>);</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">SecureRandom prng = new SecureRandom();</p>
+<p style="font-size: 10px;">prng.setSeed(<b style="color: #629460;">System.currentTimeMillis()</b>);</p>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<html>
+<body>
+<b>Momo 1016:</b> XMLDecoder 反序列化风险 <br>
+<br>
+<p>XMLDecoder在JDK 1.4~JDK 11中都存在反序列化漏洞安全风险。</p>
+<p>攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。</p>
+<p>在项目中应禁止使用XMLDecoder方式解析XML内容。</p>
+<br>
+<hr>
+<references style="font-size: 7px;">
+    <p>参考资料:</p>
+    <p><a href="https://access.redhat.com/blogs/766093/posts/1976113">Java deserialization flaws</a></p>
+</references>
+</body>
+</html>
