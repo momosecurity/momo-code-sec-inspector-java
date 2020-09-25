@@ -1,0 +1,20 @@
+<html>
+<body>
+<b>Momo 1010:</b> XXE漏洞 <br>
+<br>
+<p>当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<pre>
+{XmlFactory}.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+</pre>
+<br>
+<p>注意: 使用static修饰变量时，应在当前类的static{}中调用setFeature().</p>
+<br>
+<hr>
+<references style="font-size: 7px;">
+    <p>参考资料:</p>
+    <p><a href="https://security.tencent.com/index.php/blog/msg/69">XXE漏洞攻防</a></p>
+</references>
+</body>
+</html>

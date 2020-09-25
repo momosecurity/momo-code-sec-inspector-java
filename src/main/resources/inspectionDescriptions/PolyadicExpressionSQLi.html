@@ -1,0 +1,19 @@
+<html>
+<body>
+<b>Momo 1001:</b> 多项式拼接型SQL注入漏洞 <br>
+<br>
+<p>攻击者可利用此漏洞，恶意修改SQL语句，导致数据库信息泄漏或被篡改。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">sql = "select * from table where id = <b style="color: #d9534f;">" + id + "</b> and 1";</p>
+<br>
+<p style="font-size: 10px;color: #629460;">jdbc最佳实践:</p>
+<p style="font-size: 10px;">sql = "select * from table where id = <b style="color: #629460;">?</b> and 1";</p>
+<br>
+<p style="font-size: 10px;color: #629460;">spring-jdbc最佳实践</p>
+<p style="font-size: 10px;">String sql = "select * from user where name in <b style="color: #629460;">(:names)</b> and status = <b style="color: #629460;">(:status)</b>";</p>
+<p style="font-size: 10px;">MapSqlParameterSource parameters = new MapSqlParameterSource();</p>
+<p style="font-size: 10px;">parameters.addValue("<b style="color: #629460;">names</b>", Arrays.asList("zhangsan", "lisi"));</p>
+<p style="font-size: 10px;">parameters.addValue("<b style="color: #629460;">status</b>", 0);</p>
+</body>
+</html>

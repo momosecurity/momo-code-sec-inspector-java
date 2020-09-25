@@ -1,0 +1,25 @@
+<html>
+<body>
+<b>Momo 1007:</b> Fastjson反序列化风险 <br>
+<br>
+<p>攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">
+<pre>
+class Foo {
+    void bar() {
+        ParserConfig.getGlobalInstance().<b style="color: #d9534f;">setAutoTypeSupport(true)</b>;
+    }
+}
+
+JVM启动参数: <b style="color: #d9534f;">-Dfastjson.parser.autoTypeSupport=true</b>
+</pre>
+</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">(1) 使用Gson组件。</p>
+<p style="font-size: 10px;">(2) 禁止使用 setAutoTypeSupport(true)。</p>
+<p style="font-size: 10px;">(3) 禁止使用JVM参数 -Dfastjson.parser.autoTypeSupport=true。</p>
+</body>
+</html>

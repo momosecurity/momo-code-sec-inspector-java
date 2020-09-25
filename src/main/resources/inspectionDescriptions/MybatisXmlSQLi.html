@@ -1,0 +1,31 @@
+<html>
+<body>
+<b>Momo 1004:</b> Mybatis注解式SQL注入漏洞 <br>
+<br>
+<p>攻击者可利用此漏洞，恶意构造SQL语句，导致数据库信息泄漏或被篡改。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">
+<pre>
+    &#x3c;select id="getUsers" resultMap="User">
+        select * from table
+        where id in <b style="color: #d9534f;">($ids)</b>
+        and status = <b style="color: #d9534f;">${status}</b>
+    &#x3c;/select>
+</pre>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">
+<pre>
+    &#x3c;select id="getUsers" resultMap="User">
+        select * from table
+        where id in
+        <b style="color: #629460;">&#x3c;foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        &#x3c;/foreach></b>
+        and status = <b style="color: #629460;">#{status}</b>
+    &#x3c;/select>
+</pre>
+</p>
+</body>
+</html>

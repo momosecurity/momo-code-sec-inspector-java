@@ -1,0 +1,88 @@
+<html>
+<body>
+<b>Momo 1018:</b> 宽泛的CORS Allowed Origin设置 <br>
+<br>
+<p>CORS配置不当可能会导致敏感信息泄露。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">
+<pre>
+// Java servlet framework
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    resp.setHeader("Access-Control-Allow-Credentials", "true");
+    <b style="color: #d9534f;">resp.setHeader("Access-Control-Allow-Origin", "*");</b>
+    resp.getWriter().write("response");
+}
+
+
+// Spring MVC framework #CorssOrigin
+<b style="color: #d9534f;">@CrossOrigin</b>
+@RequestMapping("/")
+public class HomeController {
+    public String home() {
+        return "home";
+    }
+}
+
+
+// Spring MVC framework #cors.CorsConfiguration
+CorsConfiguration config = new CorsConfiguration();
+<b style="color: #d9534f;">config.addAllowedOrigin("*");</b>
+<b style="color: #d9534f;">config.applyPermitDefaultValues();</b>
+
+
+// Spring MVC framework #web.servlet.config.annotation.CorsRegistration
+class Insecure implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+      <b style="color: #d9534f;">.allowedOrigins("*");  // 显式声明</b>
+  }
+}
+
+class InsecureHidden implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+      <b style="color: #d9534f;">registry.addMapping("/**");  // 隐式声明</b>
+  }
+}
+</pre>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">
+<pre>
+// Java servlet framework
+protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    resp.setHeader("Access-Control-Allow-Credentials", "true");
+    <b style="color: #629460;">resp.setHeader("Access-Control-Allow-Origin", "https://www.immomo.com");</b>
+    resp.getWriter().write("response");
+}
+
+
+// Spring MVC framework #CorssOrigin
+<b style="color: #629460;">@CrossOrigin(origins = "https://www.immomo.com")</b>
+@RequestMapping("/")
+public class HomeController {
+    public String home() {
+        return "home";
+    }
+}
+
+
+// Spring MVC framework #cors.CorsConfiguration
+CorsConfiguration config = new CorsConfiguration();
+<b style="color: #629460;">config.addAllowedOrigin("https://www.immomo.com");</b>
+
+
+// Spring MVC framework #web.servlet.config.annotation.CorsRegistration
+class Insecure implements WebMvcConfigurer {
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+      <b style="color: #629460;">.allowedOrigins("https://www.immomo.com");  // 显式声明</b>
+  }
+}
+</pre>
+</p>
+</body>
+</html>

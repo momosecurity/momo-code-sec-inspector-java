@@ -1,0 +1,35 @@
+<html>
+<body>
+<b>Momo 1006:</b> Jackson反序列化风险 <br>
+<br>
+<p>攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">
+<pre>
+class Entity {
+    @JsonTypeInfo(use = <b style="color: #d9534f;">JsonTypeInfo.Id.CLASS</b>)
+    Object field1;
+
+    @JsonTypeInfo(use = <b style="color: #d9534f;">JsonTypeInfo.Id.MINIMAL_CLASS</b>)
+    Object field2;
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+    Object field3;
+}
+
+class Foo {
+    void bar() {
+        ObjectMapper mapper = new ObjectMapper();
+        <b style="color: #d9534f;">mapper.enableDefaultTyping();</b>
+    }
+}
+</pre>
+</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">(1) 禁止开启DefaultTyping功能。</p>
+<p style="font-size: 10px;">(2) 禁止使用JsonTypeInfo.Id.CLASS注解值。</p>
+<p style="font-size: 10px;">(3) 禁止使用JsonTypeInfo.Id.MINIMAL_CLASS注解值。</p>
+</body>
+</html>
