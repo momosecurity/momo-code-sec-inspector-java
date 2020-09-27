@@ -21,15 +21,7 @@
 
 Intellij IDEA ( Community / Ultimate ) 
 
-- 2017.3
-- 2018.1
-- 2018.2
-- 2018.3
-- 2019.1
-- 2019.2
-- 2019.3
-- 2020.1
-- 2020.2
+\>= 2017.3
 
 
 
@@ -46,6 +38,8 @@ Intellij IDEA ( Community / Ultimate )
 
 
 ### 安装使用
+
+<iframe frameborder="none" width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/15120"></iframe>
 
 
 
