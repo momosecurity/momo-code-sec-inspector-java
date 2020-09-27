@@ -9,8 +9,8 @@
 ### 目录
 
 1. [版本支持](#版本支持)
-2. [效果展示](#效果展示)
-3. [安装使用](#安装使用)
+2. [安装使用](#安装使用)
+3. [效果展示](#效果展示)
 3. [贡献代码](#贡献代码)
 4. [注意事项](#注意事项)
 5. [关于我们](#关于我们)
@@ -19,9 +19,13 @@
 
 ### 版本支持
 
-Intellij IDEA ( Community / Ultimate ) 
+Intellij IDEA ( Community / Ultimate )  \>= 2017.3
 
-\>= 2017.3
+
+
+### 安装使用
+
+<iframe frameborder="none" width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/15120"></iframe>
 
 
 
@@ -34,12 +38,6 @@ Intellij IDEA ( Community / Ultimate )
 **演示二： Mybatis XML Mapper SQL注入漏洞发现与一键修复**
 
 <img src="static/show2.gif" height="400">
-
-
-
-### 安装使用
-
-<iframe frameborder="none" width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/15120"></iframe>
 
 
 
