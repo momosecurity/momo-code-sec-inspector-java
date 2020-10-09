@@ -11,9 +11,10 @@
 1. [版本支持](#版本支持)
 2. [安装使用](#安装使用)
 3. [效果展示](#效果展示)
-3. [贡献代码](#贡献代码)
-4. [注意事项](#注意事项)
-5. [关于我们](#关于我们)
+4. [插件规则](#插件规则)
+5. [贡献代码](#贡献代码)
+6. [注意事项](#注意事项)
+7. [关于我们](#关于我们)
 
 
 
@@ -25,7 +26,9 @@ Intellij IDEA ( Community / Ultimate )  \>= 2017.3
 
 ### 安装使用
 
-<iframe frameborder="none" width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/15120"></iframe>
+IDEA插件市场搜索"**immomo**"安装。
+
+<img src="static/install.jpg" height="400">
 
 
 
@@ -38,6 +41,30 @@ Intellij IDEA ( Community / Ultimate )  \>= 2017.3
 **演示二： Mybatis XML Mapper SQL注入漏洞发现与一键修复**
 
 <img src="static/show2.gif" height="400">
+
+
+
+### 插件规则
+
+|编号|规则名称|修复建议|一键修复|
+|-|-|-|-|
+|1001|多项式拼接型SQL注入漏洞|<font color="#6abe83">T</font>||
+|1002|占位符拼接型SQL注入漏洞|<font color="#6abe83">T</font>||
+|1003|Mybatis注解SQL注入漏洞|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1004|Mybatis XML SQL注入漏洞|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1005|RegexDos风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1006|Jackson反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1007|Fastjson反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1008|Netty响应拆分攻击|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1009|固定的随机数种子风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1010|XXE漏洞|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1011|XStream反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1014|脆弱的消息摘要算法|<font color="#6abe83">T</font>||
+|1015|过时的加密标准|<font color="#6abe83">T</font>||
+|1016|XMLDecoder反序列化风险|<font color="#6abe83">T</font>||
+|1017|LDAP反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1018|宽泛的CORS Allowed Origin设置|<font color="#6abe83">T</font>||
+|1019|SpringSecurity关闭Debug模式|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
 
 
 
