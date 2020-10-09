@@ -16,14 +16,11 @@
 package com.immomo.momosec.lang.java.utils;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
-import com.intellij.psi.util.PsiTypesUtil;
+import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.ObjectUtils;
 import com.siyeh.ig.psiutils.ExpressionUtils;
 import com.siyeh.ig.psiutils.MethodCallUtils;
-import com.siyeh.ig.psiutils.ParenthesesUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +38,7 @@ public class MoExpressionUtils {
 
     @Nullable
     public static PsiField resolveField(@Nullable PsiExpression expression) {
-        expression = ParenthesesUtils.stripParentheses(expression);
+        expression = PsiUtil.skipParenthesizedExprDown(expression);
         PsiReferenceExpression referenceExpression = ObjectUtils.tryCast(expression, PsiReferenceExpression.class);
         return referenceExpression == null ? null : ObjectUtils.tryCast(referenceExpression.resolve(), PsiField.class);
     }

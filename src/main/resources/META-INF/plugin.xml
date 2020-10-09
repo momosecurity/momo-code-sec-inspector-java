@@ -20,8 +20,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
 
-        <postStartupActivity implementation="com.immomo.momosec.VulnSignWhiteListService"/>
-        <projectService serviceImplementation="com.immomo.momosec.FeedbackService" />
+<!--        <postStartupActivity implementation="com.immomo.momosec.VulnSignWhiteListService"/>-->
+<!--        <projectService serviceImplementation="com.immomo.momosec.FeedbackService" />-->
 
         <localInspection
             language="JAVA"       groupPath="Java"          displayName="Momo 1001: 多项式拼接型SQL注入漏洞"
@@ -127,9 +127,9 @@
     </extensions>
 
     <application-components>
-        <component>
-            <implementation-class>com.immomo.momosec.VulnSignWhiteListService</implementation-class>
-        </component>
+<!--        <component>-->
+<!--            <implementation-class>com.immomo.momosec.VulnSignWhiteListService</implementation-class>-->
+<!--        </component>-->
     </application-components>
 
     <actions>

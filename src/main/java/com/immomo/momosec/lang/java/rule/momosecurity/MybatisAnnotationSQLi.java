@@ -136,7 +136,7 @@ public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
 
             // 目前仅对单一字符串进行自动替换
             if (problemElem instanceof PsiLiteralExpression) {
-                String content = ((PsiLiteralExpressionImpl)problemElem).getInnerText();
+                String content = MoExpressionUtils.getLiteralInnerText((PsiLiteralExpression)problemElem);
                 if (content != null) {
                     String newContent = replaceDollarWithHashtagOnString(content, 0);
                     PsiElementFactory factory = JavaPsiFacade.getElementFactory(project);
