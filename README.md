@@ -179,7 +179,7 @@ src
 |2018.3|193|2018.3.* <= x|
 |2017.3|173|2017.3.* <= x <= 2018.2.*|
 
-- JetBrains PLugins Marketplace 版本
+- JetBrains Plugins Marketplace 版本
 
 发布到插件市场的版本不支持漏洞上报功能。
 
