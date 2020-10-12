@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.8]
+
+### Modify 
+
+- Replace deprecated API.
+
 ## [x.7]
 
 ### BugFix
