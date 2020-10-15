@@ -20,6 +20,7 @@ import com.immomo.momosec.lang.xml.MomoXmlCodeInsightFixtureTestCase;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.XmlElementFactory;
+import com.intellij.psi.impl.source.xml.XmlTagImpl;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
 import com.intellij.testFramework.MockProblemDescriptor;
@@ -62,41 +63,41 @@ public class MybatisXmlSQLiTest extends MomoXmlCodeInsightFixtureTestCase {
     }
 
     public void testWhereInQuickFix() {
-        Project project = myFixture.getProject();
-        XmlText text = XmlElementFactory.getInstance(project).createDisplayText(
-                "where id in ${ids}"
-        );
+        commonWhereInReplaceTest(
+                "where id in ${ids}",
 
-        MockProblemDescriptor descriptor = new MockProblemDescriptor(text, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
-        MybatisXmlSQLi.MybatisXmlSQLiQuickFix quickFix = new MybatisXmlSQLi.MybatisXmlSQLiQuickFix();
-        quickFix.applyFix(project, descriptor);
-
-        assert text.getNextSibling() instanceof XmlTag;
-        XmlTag foreach = (XmlTag)text.getNextSibling();
-        Assert.assertEquals(
+                "where id in \n" +
                 "<foreach collection=\"ids\" item=\"idsItem\" open=\"(\" separator=\",\" close=\")\">\n" +
                 "#{idsItem}\n" +
-                "</foreach>",
-                foreach.getText());
+                "</foreach>\n"
+        );
+    }
+
+    public void testDoubleWhereInQuickFix() {
+        commonWhereInReplaceTest(
+                "and (createdBy in ${userNameList} or projectId IN ${id})",
+
+                "and (createdBy in \n" +
+                "<foreach collection=\"userNameList\" item=\"userNameListItem\" open=\"(\" separator=\",\" close=\")\">\n" +
+                "#{userNameListItem}\n" +
+                "</foreach>\n" +
+                " or projectId IN \n" +
+                "<foreach collection=\"id\" item=\"idItem\" open=\"(\" separator=\",\" close=\")\">\n" +
+                "#{idItem}\n" +
+                "</foreach>\n" +
+                ")"
+        );
+
     }
 
     public void testWhereInWithQuoteQuickFix() {
-        Project project = myFixture.getProject();
-        XmlText text = XmlElementFactory.getInstance(project).createDisplayText(
-                "where id in (${ids})"
-        );
-
-        MockProblemDescriptor descriptor = new MockProblemDescriptor(text, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
-        MybatisXmlSQLi.MybatisXmlSQLiQuickFix quickFix = new MybatisXmlSQLi.MybatisXmlSQLiQuickFix();
-        quickFix.applyFix(project, descriptor);
-
-        assert text.getNextSibling() instanceof XmlTag;
-        XmlTag foreach = (XmlTag)text.getNextSibling();
-        Assert.assertEquals(
+        commonWhereInReplaceTest(
+                "where id in (${ids})",
+                "where id in \n" +
                 "<foreach collection=\"ids\" item=\"idsItem\" open=\"(\" separator=\",\" close=\")\">\n" +
                 "#{idsItem}\n" +
-                "</foreach>",
-                foreach.getText());
+                "</foreach>\n"
+        );
     }
 
     public void testLikeQuickFix() {
@@ -128,5 +129,16 @@ public class MybatisXmlSQLiTest extends MomoXmlCodeInsightFixtureTestCase {
         quickFix.applyFix(project, descriptor);
 
         Assert.assertEquals(expect, text.getText());
+    }
+
+    public void commonWhereInReplaceTest(String origin, String expect) {
+        Project project = myFixture.getProject();
+        XmlText text = XmlElementFactory.getInstance(project).createDisplayText(origin);
+
+        MockProblemDescriptor descriptor = new MockProblemDescriptor(text, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+        MybatisXmlSQLi.MybatisXmlSQLiQuickFix quickFix = new MybatisXmlSQLi.MybatisXmlSQLiQuickFix();
+        quickFix.applyFix(project, descriptor);
+
+        Assert.assertEquals(expect, ((XmlTagImpl) text.getParent()).getValue().getText());
     }
 }

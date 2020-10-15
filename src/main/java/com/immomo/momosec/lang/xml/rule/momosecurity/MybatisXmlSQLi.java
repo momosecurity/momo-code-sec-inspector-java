@@ -22,10 +22,7 @@ import com.intellij.codeInspection.*;
 import com.intellij.lang.ASTFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElementType;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
+import com.intellij.psi.xml.*;
 import com.intellij.xml.util.XmlUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;
@@ -167,9 +164,13 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
                             suffixXmlText = textElements[0];
                         }
 
-                        // 4. 先修正尾部文本再追加
-                        fixXmlText(suffixXmlText, 0);
+                        // 4. 先追加再修正尾部文本
                         parent.add(suffixXmlText);
+
+                        XmlTagChild[] xmlTagChildren = parent.getValue().getChildren();
+                        if (xmlTagChildren[xmlTagChildren.length - 1] instanceof XmlText) {
+                            fixXmlText((XmlText)xmlTagChildren[xmlTagChildren.length - 1], 0);
+                        }
                     } else {
                         fixXmlText(xmlText, m.end());
                     }
