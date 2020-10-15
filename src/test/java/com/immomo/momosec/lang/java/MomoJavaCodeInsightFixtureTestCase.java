@@ -46,7 +46,7 @@ public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsight
         myFixture.testHighlightingAllFiles(true, false, false, names);
     }
 
-    protected void testQuickFixInClassInitializer(String classInner, String expectAddStat, LocalQuickFix quickFix) {
+    protected void testQuickFixInClassInitializer(String classInner, String[] expectAddStats, LocalQuickFix quickFix) {
         Project project = myFixture.getProject();
         PsiClass aClass = JavaPsiFacade.getElementFactory(project).createClassFromText(classInner, null);
 
@@ -65,17 +65,24 @@ public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsight
         if (firstStat instanceof PsiTryStatement) {
             PsiTryStatement tryStatement = (PsiTryStatement)initializer.getBody().getStatements()[0];
             assert tryStatement.getTryBlock() != null;
-            assert tryStatement.getTryBlock().getStatements().length == 1;
             expStat = (PsiExpressionStatement)tryStatement.getTryBlock().getStatements()[0];
         } else {
             expStat = (PsiExpressionStatement)firstStat;
         }
         assert expStat.getExpression() instanceof PsiMethodCallExpression;
 
-        Assert.assertEquals(expectAddStat, expStat.getExpression().getText());
+        String[] actual = new String[expectAddStats.length];
+        PsiElement currStat = expStat;
+        for (int i=0; i<expectAddStats.length && currStat != null; i++) {
+            actual[i] = ((PsiExpressionStatement)currStat).getExpression().getText();
+            do {
+                currStat = currStat.getNextSibling();
+            } while(i < expectAddStats.length - 1 && currStat != null && !(currStat instanceof PsiStatement));
+        }
+        Assert.assertArrayEquals(expectAddStats, actual);
     }
 
-    protected void testQuickFixEntityInLocalVariable(String methodInner, String expectAddStat, LocalQuickFix quickFix) {
+    protected void testQuickFixEntityInLocalVariable(String methodInner, String[] expectAddStats, LocalQuickFix quickFix) {
         Project project = myFixture.getProject();
         PsiMethod method = JavaPsiFacade.getElementFactory(project).createMethodFromText(
                 "public foo () {\n" +
@@ -98,15 +105,22 @@ public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsight
                 new MockProblemDescriptor(rExp, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
         quickFix.applyFix(project, descriptor);
 
-        assert method.getBody().getStatements().length == 2;
         assert method.getBody().getStatements()[1] instanceof PsiExpressionStatement;
         PsiExpressionStatement expStat = (PsiExpressionStatement)method.getBody().getStatements()[1];
         assert expStat.getExpression() instanceof PsiMethodCallExpression;
 
-        Assert.assertEquals(expectAddStat, expStat.getExpression().getText());
+        String[] actual = new String[expectAddStats.length];
+        PsiElement currStat = expStat;
+        for (int i=0; i<expectAddStats.length && currStat != null; i++) {
+            actual[i] = ((PsiExpressionStatement)currStat).getExpression().getText();
+            do {
+                currStat = currStat.getNextSibling();
+            } while(i < expectAddStats.length - 1 && currStat != null && !(currStat instanceof PsiStatement));
+        }
+        Assert.assertArrayEquals(expectAddStats, actual);
     }
 
-    protected void testQuickFixEntityInMethodAssignment(String classInner, String expectAddStat, LocalQuickFix quickFix) {
+    protected void testQuickFixEntityInMethodAssignment(String classInner, String[] expectAddStats, LocalQuickFix quickFix) {
         Project project = myFixture.getProject();
         PsiClass aClass = JavaPsiFacade.getElementFactory(project).createClassFromText(
                 classInner, null);
@@ -130,11 +144,18 @@ public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsight
                 new MockProblemDescriptor(rExp, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
         quickFix.applyFix(project, descriptor);
 
-        assert method.getBody().getStatements().length == 2;
         assert method.getBody().getStatements()[1] instanceof PsiExpressionStatement;
         PsiExpressionStatement expStat = (PsiExpressionStatement)method.getBody().getStatements()[1];
         assert expStat.getExpression() instanceof PsiMethodCallExpression;
 
-        Assert.assertEquals(expectAddStat, expStat.getExpression().getText());
+        String[] actual = new String[expectAddStats.length];
+        PsiElement currStat = expStat;
+        for (int i=0; i<expectAddStats.length && currStat != null; i++) {
+            actual[i] = ((PsiExpressionStatement)currStat).getExpression().getText();
+            do {
+                currStat = currStat.getNextSibling();
+            } while(i < expectAddStats.length - 1 && currStat != null && !(currStat instanceof PsiStatement));
+        }
+        Assert.assertArrayEquals(expectAddStats, actual);
     }
 }

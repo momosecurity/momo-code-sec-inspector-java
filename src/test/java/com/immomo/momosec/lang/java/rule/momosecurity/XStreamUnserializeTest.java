@@ -29,7 +29,7 @@ public class XStreamUnserializeTest extends MomoJavaCodeInsightFixtureTestCase {
     public void testLocalVariableFix() {
         testQuickFixEntityInLocalVariable(
                 "XStream x = new XStream(new DomDriver());",
-                "XStream.setupDefaultSecurity(x)",
+                new String[]{"XStream.setupDefaultSecurity(x)"},
                 new XStreamUnserialize.XStreamUnserializeQuickFix()
         );
     }
@@ -40,7 +40,7 @@ public class XStreamUnserializeTest extends MomoJavaCodeInsightFixtureTestCase {
                 "public void foo() {\n" +
                 "  x = new XStream(new DomDriver());\n" +
                 "}",
-                "XStream.setupDefaultSecurity(x)",
+                new String[]{"XStream.setupDefaultSecurity(x)"},
                 new XStreamUnserialize.XStreamUnserializeQuickFix()
         );
     }
@@ -48,7 +48,7 @@ public class XStreamUnserializeTest extends MomoJavaCodeInsightFixtureTestCase {
     public void testClassFieldFix() {
         testQuickFixInClassInitializer(
                 "static XStream x = new XStream(new DomDriver());",
-                "XStream.setupDefaultSecurity(x)",
+                new String[]{"XStream.setupDefaultSecurity(x)"},
                 new XStreamUnserialize.XStreamUnserializeQuickFix()
         );
     }
