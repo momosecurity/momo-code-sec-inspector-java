@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.9]
+
+### Modify
+
+- Support more XML Parser to detect XXE vuln.
+
+### BugFix
+
+- Show green screen when use XXE quickfix.
+- Github issue#2 XML foreach Error.
+
 ## [x.8]
 
 ### Modify 
