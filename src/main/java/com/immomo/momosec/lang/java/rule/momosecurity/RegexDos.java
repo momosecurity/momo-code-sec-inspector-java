@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -50,8 +51,8 @@ import java.util.regex.Pattern;
  * `isExponentialRegex` method copy from CodeQL
  */
 public class RegexDos extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现regexDos风险";
-    private static final String QUICK_FIX_NAME = "!Fix: replace with RE2/J";
+    public static final String MESSAGE = InspectionBundle.message("regex.dos.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("regex.dos.fix");
 
     private final RegexDosWithRe2jQuickFix regexDosWithRe2jQuickFix = new RegexDosWithRe2jQuickFix();
 

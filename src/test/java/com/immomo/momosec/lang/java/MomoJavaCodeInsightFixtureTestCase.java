@@ -27,6 +27,8 @@ import com.intellij.testFramework.MockProblemDescriptor;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
+import java.util.Locale;
+
 
 public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsightFixtureTestCase {
 
@@ -39,6 +41,7 @@ public abstract class MomoJavaCodeInsightFixtureTestCase extends JavaCodeInsight
     protected void setUp() throws Exception {
         super.setUp();
         LanguageLevelProjectExtension.getInstance(getProject()).setLanguageLevel(LanguageLevel.JDK_1_7);
+        Locale.setDefault(Locale.CHINESE);
     }
 
     protected void doTest(@NotNull InspectionProfileEntry inspection, @NotNull String... names) {

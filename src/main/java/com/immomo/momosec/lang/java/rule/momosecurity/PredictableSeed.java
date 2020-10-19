@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -32,8 +33,8 @@ import org.jetbrains.annotations.NotNull;
  * ref: https://github.com/github/codeql/blob/main/java/ql/src/Security/CWE/CWE-335/PredictableSeed.qhelp
  */
 public class PredictableSeed extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现固定的随机数种子风险";
-    private static final String QUICK_FIX_NAME = "!Fix: use random seed";
+    public static final String MESSAGE = InspectionBundle.message("predictable.seed.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("predictable.seed.fix");
 
     private final PredictableSeedQuickFix predictableSeedQuickFix = new PredictableSeedQuickFix();
 

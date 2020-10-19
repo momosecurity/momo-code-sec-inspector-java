@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.TrueArgToFalseQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -29,8 +30,8 @@ import org.jetbrains.annotations.NotNull;
  * ref: https://rules.sonarsource.com/java/type/Vulnerability/RSPEC-4434
  */
 public class LDAPUnserialize extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现 LDAP 反序列化风险";
-    private static final String QUICK_FIX_NAME = "!Fix: set returnObj False";
+    public static final String MESSAGE = InspectionBundle.message("ldap.unserialize.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("ldap.unserialize.fix");
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {

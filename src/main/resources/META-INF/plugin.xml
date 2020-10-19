@@ -24,104 +24,121 @@
 <!--        <projectService serviceImplementation="com.immomo.momosec.FeedbackService" />-->
 
         <localInspection
-            language="JAVA"       groupPath="Java"          displayName="Momo 1001: 多项式拼接型SQL注入漏洞"
+            language="JAVA"       groupPath="Java"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="polyadic.expression.sqli.name"
             groupName="MomoSec"   enabledByDefault="true"   level="ERROR"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PolyadicExpressionSQLi"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"          displayName="Momo 1002: 占位符拼接型SQL注入漏洞"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"   level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="placeholder.string.sqli.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PlaceholderStringSQLi"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"          displayName="Momo 1003: Mybatis注解SQL注入漏洞"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"   level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="mybatis.annotation.sqli.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.MybatisAnnotationSQLi"
         />
 
         <localInspection
-            language="XML"        groupPath="XML"            displayName="Momo 1004: Mybatis XML SQL注入漏洞"
+            language="XML"        groupPath="XML"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="mybatis.xml.sqli.name"
             implementationClass="com.immomo.momosec.lang.xml.rule.momosecurity.MybatisXmlSQLi"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1005: RegexDos风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="regex.dos.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.RegexDos"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1006: Jackson反序列化风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="jackson.databind.default.typing.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.JacksonDatabindDefaultTyping"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1007: Fastjson反序列化风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="fastjson.auto.type.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.FastjsonAutoType"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1008: Netty响应拆分攻击"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="netty.response.splitting.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.NettyResponseSplitting"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1009: 固定的随机数种子风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="predictable.seed.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PredictableSeed"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1010: XXE漏洞"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="xxe.inspector.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.XxeInspector"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1011: XStream反序列化风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="xstream.unserialize.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.XStreamUnserialize"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1014: 脆弱的消息摘要算法"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="WARNING"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="weak.hash.inspector.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.WeakHashInspector"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1015: 过时的加密标准"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="outdated.encryption.inspector.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.OutdatedEncryptionInspector"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1016: XMLDecoder反序列化风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="xml.decoder.unserialize.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.XMLDecoderUnserialize"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1017: LDAP反序列化风险"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="ldap.unserialize.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.LDAPUnserialize"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1018: 宽泛的CORS Allowed Origin设置"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="board.cors.allow.origin.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.BroadCORSAllowOrigin"
         />
 
         <localInspection
-            language="JAVA"       groupPath="Java"           displayName="Momo 1019: SpringSecurity关闭Debug模式"
+            language="JAVA"       groupPath="Java"
             groupName="MomoSec"   enabledByDefault="true"    level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="spring.security.debug.enabled.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.SpringSecurityDebugEnabled"
         />
     </extensions>

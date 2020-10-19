@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.ShowHelpCommentQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -40,8 +41,8 @@ import static com.immomo.momosec.utils.SQLi.placeholderPattern;
  * (2) String.format("select * from table where id = %1$3s", id);
  */
 public class PlaceholderStringSQLi extends BaseSQLi {
-    public static final String MESSAGE = "MomoSec: 疑似占位符拼接SQL注入漏洞";
-    private static final String QUICK_FIX_NAME = "help: show help";
+    public static final String MESSAGE = InspectionBundle.message("placeholder.string.sqli.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("placeholder.string.sqli.fix");
 
     private final ShowHelpCommentQuickFix showHelpCommentQuickFix = new ShowHelpCommentQuickFix(QUICK_FIX_NAME, SQL_INJECTION_HELP_COMMENT);
 

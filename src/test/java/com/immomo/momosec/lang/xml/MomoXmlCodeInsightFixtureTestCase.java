@@ -20,8 +20,16 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
+import java.util.Locale;
+
 
 public class MomoXmlCodeInsightFixtureTestCase extends JavaCodeInsightFixtureTestCase {
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        Locale.setDefault(Locale.CHINESE);
+    }
 
     @Override
     protected String getTestDataPath() {

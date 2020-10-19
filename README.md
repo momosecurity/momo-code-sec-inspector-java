@@ -1,5 +1,9 @@
 ## MOMO CODE SEC INSPECTOR
 
+![Downloads](https://img.shields.io/jetbrains/plugin/d/15120-momo-code-sec-inspector-java-)
+![Rating](https://img.shields.io/jetbrains/plugin/r/stars/15120-momo-code-sec-inspector-java-)
+[![JetBrains IntelliJ Platform SDK Docs](https://jb.gg/badges/docs.svg)](http://www.jetbrains.org/intellij/sdk/docs)
+
 本插件作为Java项目静态代码安全审计工具，侧重于在编码过程中发现项目潜在的安全风险，并提供一键修复能力。
 
 本插件利用IDEA原生Inspection机制检查项目，自动检查当前活跃窗口的活跃文件，检查速度快，占用资源少。
