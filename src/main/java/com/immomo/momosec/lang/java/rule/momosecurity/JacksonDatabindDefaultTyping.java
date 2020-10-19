@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.DeleteElementQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseFixElementWalkingVisitor;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
@@ -40,9 +41,9 @@ import org.jetbrains.annotations.NotNull;
  * (3) Annotation: @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS)
  */
 public class JacksonDatabindDefaultTyping extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现Jackson反序列化风险";
-    private static final String DEFAULT_TYPING_FIX_NAME = "!Fix: 移除 enableDefaultTyping";
-    private static final String ANNOTATION_FIX_NAME = "!Fix: replace with JsonTypeInfo.Id.NAME";
+    public static final String MESSAGE = InspectionBundle.message("jackson.databind.default.typing.msg");
+    private static final String DEFAULT_TYPING_FIX_NAME = InspectionBundle.message("jackson.databind.default.typing.default.fix");
+    private static final String ANNOTATION_FIX_NAME = InspectionBundle.message("jackson.databind.default.typing.annotation.fix");
 
     private final AnnotationQuickFix annotationQuickFix = new AnnotationQuickFix();
 

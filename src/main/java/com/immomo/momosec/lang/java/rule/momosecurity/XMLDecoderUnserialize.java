@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  * https://access.redhat.com/blogs/766093/posts/1976113
  */
 public class XMLDecoderUnserialize extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现 XMLDecoder 反序列化风险";
+    public static final String MESSAGE = InspectionBundle.message("xml.decoder.unserialize.msg");
 
 
     @Override

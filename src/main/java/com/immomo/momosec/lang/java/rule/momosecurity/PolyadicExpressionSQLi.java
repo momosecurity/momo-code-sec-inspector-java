@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.ShowHelpCommentQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -38,8 +39,8 @@ import static com.immomo.momosec.utils.SQLi.placeholderPattern;
  * (2) "select * from table" + " where id = " + getUserId();
  */
 public class PolyadicExpressionSQLi extends BaseSQLi {
-    public static final String MESSAGE = "MomoSec: 疑似多项式拼接SQL注入漏洞";
-    private static final String QUICK_FIX_NAME = "help: show help";
+    public static final String MESSAGE = InspectionBundle.message("polyadic.expression.sqli.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("polyadic.expression.sqli.fix");
 
     private final ShowHelpCommentQuickFix showHelpCommentQuickFix = new ShowHelpCommentQuickFix(QUICK_FIX_NAME, SQL_INJECTION_HELP_COMMENT);
 

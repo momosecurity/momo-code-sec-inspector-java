@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -31,8 +32,8 @@ import org.jetbrains.annotations.NotNull;
  *  ref: https://rules.sonarsource.com/java/type/Security%20Hotspot/RSPEC-4507
  */
 public class SpringSecurityDebugEnabled extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现 SpringSecurity 开启 Debug 模式";
-    private static final String QUICK_FIX_NAME = "!Fix: disable debug";
+    public static final String MESSAGE = InspectionBundle.message("spring.security.debug.enabled.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("spring.security.debug.enabled.fix");
     private final SpringSecurityDebugDisable springSecurityDebugDisable = new SpringSecurityDebugDisable();
 
     @Override

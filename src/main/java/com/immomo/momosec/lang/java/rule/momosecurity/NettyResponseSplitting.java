@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -34,8 +35,8 @@ import org.jetbrains.annotations.NotNull;
  * (2) http://www.infosecwriters.com/Papers/DCrab_HTTP_Response.pdf
  */
 public class NettyResponseSplitting extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: Netty响应拆分攻击";
-    private static final String QUICK_FIX_NAME = "!Fix: 开启验证";
+    public static final String MESSAGE = InspectionBundle.message("netty.response.splitting.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("netty.response.splitting.fix");
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {

@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.DeleteElementQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -35,8 +36,8 @@ import org.jetbrains.annotations.NotNull;
  * -Dfastjson.parser.autoTypeSupport=true
  */
 public class FastjsonAutoType extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现fastjson反序列化风险";
-    private static final String QUICK_FIX_NAME = "!Fix: 移除 setAutoTypeSupport";
+    public static final String MESSAGE = InspectionBundle.message("fastjson.auto.type.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("fastjson.auto.type.fix");
 
     @Override
     @NotNull

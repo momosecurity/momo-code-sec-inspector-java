@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.xml.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.utils.SQLi;
 import com.immomo.momosec.utils.Str;
@@ -40,8 +41,8 @@ import static com.immomo.momosec.utils.SQLi.*;
  */
 public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
 
-    public static final String MESSAGE = "MomoSec: Mybatis XML SQL注入漏洞";
-    private static final String QUICK_FIX_NAME = "!Fix: #{hashtag}";
+    public static final String MESSAGE = InspectionBundle.message("mybatis.xml.sqli.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("mybatis.xml.sqli.fix");
 
     protected static final Set<String> ignoreVarName =
             new HashSet<>(Arrays.asList("orderByClause", "pageStart", "pageSize", "criterion.condition"));

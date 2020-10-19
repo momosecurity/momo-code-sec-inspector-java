@@ -16,6 +16,7 @@
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
 import com.immomo.momosec.fix.ShowHelpCommentQuickFix;
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseFixElementWalkingVisitor;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
@@ -38,8 +39,8 @@ import org.jetbrains.annotations.NotNull;
  * http://x-stream.github.io/changes.html
  */
 public class XStreamUnserialize extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: XStream 反序列化风险";
-    private static final String QUICK_FIX_NAME = "!Fix: 开启安全校验";
+    public static final String MESSAGE = InspectionBundle.message("xstream.unserialize.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("xstream.unserialize.fix");
     private static final String SETUP_DEFAULT_SECURITY = "setupDefaultSecurity";
 
     private final XStreamUnserializeQuickFix xStreamUnserializeQuickFix = new XStreamUnserializeQuickFix();
