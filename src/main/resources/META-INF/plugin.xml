@@ -141,6 +141,13 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="spring.security.debug.enabled.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.SpringSecurityDebugEnabled"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="WARNING"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="hardcoded.credentials.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.HardcodedCredentials"
+        />
     </extensions>
 
     <application-components>
