@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.10]
+
+### Added
+
+- 1020: HardcodedCredentials
+- scaffold for add/delete Inspection
+
+### Modify
+
+- remove unused test code
+- i18n for Inspection Message, QuickFix, DisplayName
+- upgrade org.jetbrains.intellij to 0.5.0
+
 ## [x.9]
 
 ### Modify
