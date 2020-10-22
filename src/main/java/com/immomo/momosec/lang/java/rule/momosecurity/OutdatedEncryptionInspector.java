@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -40,7 +41,7 @@ import org.jetbrains.annotations.NotNull;
  * https://www.nist.gov/news-events/news/2005/06/nist-withdraws-outdated-data-encryption-standard
  */
 public class OutdatedEncryptionInspector extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现过时的加密标准";
+    public static final String MESSAGE = InspectionBundle.message("outdated.encryption.inspector.msg");
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {

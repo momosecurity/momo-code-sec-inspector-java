@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseFixElementWalkingVisitor;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
@@ -59,8 +60,8 @@ import java.util.Map;
  * (1) https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing
  */
 public class XxeInspector extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 疑似存在XXE漏洞";
-    private static final String QUICK_FIX_NAME = "!Fix: 禁用外部实体";
+    public static final String MESSAGE = InspectionBundle.message("xxe.inspector.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("xxe.inspector.fix");
 
     public enum XmlFactory {
         DOCUMENT_BUILDER_FACTORY,

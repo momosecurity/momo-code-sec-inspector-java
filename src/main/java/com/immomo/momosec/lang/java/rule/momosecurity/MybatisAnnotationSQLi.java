@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.immomo.momosec.utils.SQLi;
@@ -54,8 +55,8 @@ import static com.immomo.momosec.utils.SQLi.*;
  * (*) @Select({"<script>", "select * from table <if test=\"id != null\">where id = #{id}</if>", "</script>"})
  */
 public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: Mybatis注解SQL注入漏洞";
-    private static final String QUICK_FIX_NAME = "!Fix: #{hashtag}";
+    public static final String MESSAGE = InspectionBundle.message("mybatis.annotation.sqli.msg");
+    private static final String QUICK_FIX_NAME = InspectionBundle.message("mybatis.annotation.sqli.fix");
 
     // 待检查的注解
     private static final Set<String> checkedAnnotations = new HashSet<>(Arrays.asList(

@@ -1,5 +1,9 @@
 ## MOMO CODE SEC INSPECTOR
 
+![Downloads](https://img.shields.io/jetbrains/plugin/d/15120-momo-code-sec-inspector-java-)
+![Rating](https://img.shields.io/jetbrains/plugin/r/stars/15120-momo-code-sec-inspector-java-)
+[![JetBrains IntelliJ Platform SDK Docs](https://jb.gg/badges/docs.svg)](http://www.jetbrains.org/intellij/sdk/docs)
+
 本插件作为Java项目静态代码安全审计工具，侧重于在编码过程中发现项目潜在的安全风险，并提供一键修复能力。
 
 本插件利用IDEA原生Inspection机制检查项目，自动检查当前活跃窗口的活跃文件，检查速度快，占用资源少。
@@ -65,6 +69,7 @@ IDEA插件市场搜索"**immomo**"安装。
 |1017|LDAP反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
 |1018|宽泛的CORS Allowed Origin设置|<font color="#6abe83">T</font>||
 |1019|SpringSecurity关闭Debug模式|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1020|硬编码凭证风险|<font color="#6abe83">T</font>||
 
 
 
@@ -128,6 +133,16 @@ src
                     └── momosecurity
                         └── {InspectionName}
                             └──...
+```
+
+#### 脚手架
+
+```shell script
+# 新增检查规则
+> python script/addInspection.py
+
+# 删除检查规则
+> python script/deleteInspection.py
 ```
 
 #### 单元测试

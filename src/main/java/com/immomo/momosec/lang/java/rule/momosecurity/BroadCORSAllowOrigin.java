@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -28,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * ref: https://rules.sonarsource.com/java/type/Security%20Hotspot/RSPEC-5122
  */
 public class BroadCORSAllowOrigin extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 宽泛的 Allowed Origin 设置";
+    public static final String MESSAGE = InspectionBundle.message("board.cors.allow.origin.msg");
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {

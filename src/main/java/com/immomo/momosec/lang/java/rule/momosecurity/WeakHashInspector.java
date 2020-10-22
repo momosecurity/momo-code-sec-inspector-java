@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -35,7 +36,7 @@ import java.util.Set;
  * https://en.wikipedia.org/wiki/MD5#Security
  */
 public class WeakHashInspector extends MomoBaseLocalInspectionTool {
-    public static final String MESSAGE = "MomoSec: 发现脆弱的消息摘要算法";
+    public static final String MESSAGE = InspectionBundle.message("weak.hash.inspector.msg");
 
     private static final Set<String> WeakHashNames = new HashSet<String>() {{
         add("MD2");
