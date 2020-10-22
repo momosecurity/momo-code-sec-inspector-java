@@ -69,6 +69,7 @@ IDEA插件市场搜索"**immomo**"安装。
 |1017|LDAP反序列化风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
 |1018|宽泛的CORS Allowed Origin设置|<font color="#6abe83">T</font>||
 |1019|SpringSecurity关闭Debug模式|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1020|硬编码凭证风险|<font color="#6abe83">T</font>||
 
 
 
@@ -132,6 +133,16 @@ src
                     └── momosecurity
                         └── {InspectionName}
                             └──...
+```
+
+#### 脚手架
+
+```shell script
+# 新增检查规则
+> python script/addInspection.py
+
+# 删除检查规则
+> python script/deleteInspection.py
 ```
 
 #### 单元测试
