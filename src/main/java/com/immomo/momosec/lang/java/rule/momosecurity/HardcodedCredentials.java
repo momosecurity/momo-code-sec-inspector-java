@@ -21,6 +21,7 @@ import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
+import me.gosimple.nbvcxz.Nbvcxz;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
 public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
     public static final String MESSAGE = InspectionBundle.message("hardcoded.credentials.msg");
     private static final Pattern pattern = Pattern.compile("(?i)passwd|pass|password|pwd|secret|token");
-    private static final double entropyThreshold = 3.0;
+    private static final double entropyThreshold = 50.0;
     private static final int truncate = 16;
 
 
@@ -92,28 +93,6 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
         if (truncate < v.length()) {
             v = v.substring(0, truncate);
         }
-        byte[] bytev = v.getBytes();
-        int []frequency_array = new int[256];
-        int bytevLength = bytev.length;
-
-        // count frequency of occuring bytes
-        for (byte byteValue : bytev) {
-            frequency_array[byteValue]++;
-        }
-
-        double entropy = 0;
-        for (int j : frequency_array) {
-            if (j != 0) {
-                // calculate the probability of a particular byte occuring
-                double probabilityOfByte = (double) j / (double) bytevLength;
-
-                // calculate the next value to sum to previous entropy calculation
-                double value = probabilityOfByte * (Math.log(probabilityOfByte) / Math.log(2));
-                entropy = entropy + value;
-            }
-        }
-        entropy *= -1;
-
-        return entropy > entropyThreshold;
+        return new Nbvcxz().estimate(v).getEntropy() > entropyThreshold;
     }
 }
