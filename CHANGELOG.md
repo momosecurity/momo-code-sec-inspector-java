@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.11]
+
+### Modify
+
+- Replace entropy algorithm
+- Replace deprecated api
+
 ## [x.10]
 
 ### Added
