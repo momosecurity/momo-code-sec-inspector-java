@@ -15,42 +15,22 @@
  */
 package com.immomo.momosec.lang;
 
-import com.intellij.BundleBase;
+import com.intellij.AbstractBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.PropertyKey;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
-public class InspectionBundle {
-    private static Reference<ResourceBundle> ourBundle;
+public class InspectionBundle extends AbstractBundle {
     @NonNls
     public static final String BUNDLE = "com.immomo.momosec.bundle.InspectionBundle";
+    private static final AbstractBundle INSTANCE = new InspectionBundle();
 
     private InspectionBundle() {
-
-    }
-
-    private static ResourceBundle getBundle() {
-        ResourceBundle bundle = com.intellij.reference.SoftReference.dereference(ourBundle);
-        if (bundle == null) {
-            try {
-                bundle = ResourceBundle.getBundle(BUNDLE);
-            } catch (MissingResourceException e) {
-                bundle = ResourceBundle.getBundle(BUNDLE, Locale.ROOT);
-            }
-            ourBundle = new SoftReference<>(bundle);
-        }
-
-        return bundle;
+        super(BUNDLE);
     }
 
     @NotNull
     public static String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, @NotNull Object... params) {
-        return BundleBase.message(getBundle(), key, params);
+        return INSTANCE.getMessage(key, params);
     }
 }
