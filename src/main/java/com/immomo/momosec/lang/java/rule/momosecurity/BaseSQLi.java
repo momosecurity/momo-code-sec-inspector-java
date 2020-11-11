@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 public abstract class BaseSQLi extends MomoBaseLocalInspectionTool {
     private static final Pattern sqlPattern =
-            Pattern.compile("^\\s*(select|delete|update|insert)\\s+.*?(from|into|set)\\s+.*?where\\s+.*", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^\\s*(select|delete|update|insert)\\s+.*?(from|into|set)\\s+.*?where.*", Pattern.CASE_INSENSITIVE);
 
     /**
      * 判断指定字符串是否为SQL语句
