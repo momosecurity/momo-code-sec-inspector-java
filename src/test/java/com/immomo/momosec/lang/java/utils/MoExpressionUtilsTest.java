@@ -17,11 +17,13 @@ package com.immomo.momosec.lang.java.utils;
 
 import com.immomo.momosec.lang.java.MomoJavaCodeInsightFixtureTestCase;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiMethod;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.*;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MoExpressionUtilsTest extends MomoJavaCodeInsightFixtureTestCase {
 
@@ -51,5 +53,114 @@ public class MoExpressionUtilsTest extends MomoJavaCodeInsightFixtureTestCase {
 
         Assert.assertEquals("_Dummy_ void method_one(java.lang.Integer id)", MoExpressionUtils.getElementFQName(aClass.getMethods()[0]));
         Assert.assertEquals("_Dummy_", MoExpressionUtils.getElementFQName(aClass.getFields()[0]));
+    }
+
+    public void testIsSqliCareExpression() {
+        PsiMethod method;
+        method = factory.createMethodFromText(
+                "public void foo() {" +
+                "  String a = \"fooa\";" +
+                "  String b = \"foob\" + a;" +
+                "  StringBuilder sb = new StringBuilder();" +
+                "  sb.append(\"foo\");" +
+                "}"
+                , null
+        );
+        assert method.getBody() != null;
+        PsiStatement[] statements = method.getBody().getStatements();
+
+        assert statements[0] instanceof PsiDeclarationStatement;
+        PsiLocalVariable var = (PsiLocalVariable)((PsiDeclarationStatement) statements[0]).getDeclaredElements()[0];
+        assert var.getInitializer() instanceof PsiLiteralExpression;
+        Assert.assertTrue(MoExpressionUtils.isSqliCareExpression(var.getInitializer()));
+
+        assert statements[1] instanceof PsiDeclarationStatement;
+        PsiLocalVariable var2 = (PsiLocalVariable)((PsiDeclarationStatement) statements[1]).getDeclaredElements()[0];
+        assert var2.getInitializer() instanceof PsiPolyadicExpression;
+        Assert.assertTrue(MoExpressionUtils.isSqliCareExpression(var2.getInitializer()));
+
+        assert statements[3] instanceof PsiExpressionStatement;
+        PsiMethodCallExpression call = (PsiMethodCallExpression)((PsiExpressionStatement) statements[3]).getExpression();
+        Assert.assertTrue(MoExpressionUtils.isSqliCareExpression(call));
+    }
+
+    public void testIsSqliCareExpressionOnFile() {
+        String stringUtils = "utils/MoExpressionUtils/StringUtils.java";
+        String testFile = "utils/MoExpressionUtils/TestIsSqliCareExpression.java";
+        myFixture.copyFileToProject(stringUtils);
+        myFixture.copyFileToProject(testFile);
+        VirtualFile vf = myFixture.findFileInTempDir(testFile);
+        PsiJavaFile file = (PsiJavaFile)getPsiManager().findFile(vf);
+
+        assert file != null;
+        PsiClass aClass = file.getClasses()[0];
+        PsiMethod method = aClass.getMethods()[0];
+        assert method.getBody() != null;
+        PsiStatement[] statements = method.getBody().getStatements();
+        assert statements[2] instanceof PsiExpressionStatement;
+        Assert.assertTrue(
+                MoExpressionUtils.isSqliCareExpression(
+                        ((PsiExpressionStatement) statements[2]).getExpression()));
+    }
+
+    public void testDeconPolyadicExpression() {
+        String testFile = "utils/MoExpressionUtils/TestDeconPolyadicExpression.java";
+        String actual;
+
+        actual = getLastPolyadicString(testFile, "polyadicWithField");
+        Assert.assertEquals("select username, password, host from User  where type = UserType.OFFICE", actual);
+
+        actual = getLastPolyadicString(testFile, "polyadicWithArgs");
+        Assert.assertEquals("select * from T where id = <not Literal>", actual);
+
+        actual = getLastPolyadicString(testFile, "polyadicWithLiteral");
+        Assert.assertEquals("select * from T where id = id", actual);
+
+        actual = getLastPolyadicString(testFile, "polyadicWithMultiLayerLiteral");
+        Assert.assertEquals("select * from T where", actual);
+
+        actual = getLastPolyadicString(testFile, "polyadicWithMultiLayerVar");
+        Assert.assertEquals("select * from T <not Literal>", actual);
+
+        actual = getLastPolyadicString(testFile, "polyadicWithStringBuilder");
+        Assert.assertEquals("select * from T where id in <not Literal>", actual);
+
+        actual = getLastPolyadicString(testFile, "ignore");
+        Assert.assertEquals("select * from T where", actual);
+    }
+
+    private String getLastPolyadicString(String filename, String methodname) {
+        myFixture.copyFileToProject(filename);
+        VirtualFile vf = myFixture.findFileInTempDir(filename);
+        PsiJavaFile file = (PsiJavaFile)getPsiManager().findFile(vf);
+
+        assert file != null;
+        PsiClass aClass = file.getClasses()[0];
+
+        PsiMethod method = null;
+        for(PsiMethod m : aClass.getMethods()) {
+            if (m.getName().equals(methodname)) {
+                method = m;
+                break;
+            }
+        }
+        assert method != null;
+        assert method.getBody() != null;
+        PsiStatement[] statements = method.getBody().getStatements();
+        assert statements[statements.length-1] instanceof PsiDeclarationStatement;
+
+        PsiDeclarationStatement sqlDeclaration = (PsiDeclarationStatement)statements[statements.length-1];
+        assert sqlDeclaration.getDeclaredElements()[0] instanceof PsiLocalVariable;
+        PsiLocalVariable sqlLocalVariable = (PsiLocalVariable)sqlDeclaration.getDeclaredElements()[0];
+
+        assert sqlLocalVariable.getInitializer() instanceof PsiPolyadicExpression;
+        List<PsiExpression> derefExps = MoExpressionUtils.deconPolyadicExpression((PsiPolyadicExpression)sqlLocalVariable.getInitializer());
+
+        return StringUtils.join(derefExps.stream().map(item -> {
+            if (item instanceof PsiLiteralExpression) {
+                return ((PsiLiteralExpression)item).getValue();
+            }
+            return "<not Literal>";
+        }).collect(Collectors.toList()), "");
     }
 }

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.12]
+
+### Modify
+
+- optimize sql sentence regex pattern
+- optimize constant String trace method
+
 ## [x.11]
 
 ### Modify

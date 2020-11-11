@@ -51,11 +51,11 @@ public class PolyadicExpressionSQLi extends BaseSQLi {
 
             @Override
             public void visitPolyadicExpression(PsiPolyadicExpression expression) {
-                List<PsiExpression> exps = MoExpressionUtils.derefPolyadicExpression(expression);
+                List<PsiExpression> exps = MoExpressionUtils.deconPolyadicExpression(expression);
                 if (exps.isEmpty()) { return ; }
 
                 String expStr = exps.stream()
-                        .map(MoExpressionUtils::getText)
+                        .map(item -> MoExpressionUtils.getText(item, true))
                         .collect(Collectors.joining());
                 if (isSql(expStr)) {
                     List<String> sql_segments = new ArrayList<>();
@@ -71,7 +71,7 @@ public class PolyadicExpressionSQLi extends BaseSQLi {
                                     sb.delete(0, sb.length());
                                 }
 
-                                if (MoExpressionUtils.isVariable(exp) || exp instanceof PsiMethodCallExpression) {
+                                if (!MoExpressionUtils.isText(exp)) {
                                     hasVar = true;
                                 }
                             } else {

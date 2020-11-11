@@ -27,7 +27,6 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiArrayInitializerMemberValueImpl;
-import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -90,10 +89,10 @@ public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
                     }
 
                     if (innerElem instanceof PsiPolyadicExpression) {   // 见注释 (2)
-                        content = MoExpressionUtils.getText((PsiPolyadicExpression)innerElem);
+                        content = MoExpressionUtils.getText((PsiPolyadicExpression)innerElem, true);
                     } else if (innerElem instanceof PsiArrayInitializerMemberValue) {   // 见注释 (3) / (4)
                         content = Arrays.stream(((PsiArrayInitializerMemberValueImpl)innerElem).getInitializers())
-                                .map(elem -> MoExpressionUtils.getText((PsiExpression)elem))
+                                .map(elem -> MoExpressionUtils.getText((PsiExpression)elem, true))
                                 .collect(Collectors.joining());
                     }
                 }
