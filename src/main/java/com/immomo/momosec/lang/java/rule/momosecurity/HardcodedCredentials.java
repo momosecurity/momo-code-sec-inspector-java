@@ -21,6 +21,7 @@ import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import me.gosimple.nbvcxz.Nbvcxz;
 import org.jetbrains.annotations.NotNull;
 
@@ -82,6 +83,28 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                         String value = MoExpressionUtils.getLiteralInnerText(initializer);
                         if (value != null && isHighEntropyString(value)) {
                             holder.registerProblem(field, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                if (MoExpressionUtils.hasFullQualifiedName(expression, "java.util.Hashtable", "put")) {
+                    PsiExpression qualifierExp = expression.getMethodExpression().getQualifierExpression();
+                    if (qualifierExp != null &&
+                        qualifierExp.getType() != null &&
+                        "java.util.Properties".equals(qualifierExp.getType().getCanonicalText())
+                    ) {
+                        PsiExpression[] args = expression.getArgumentList().getExpressions();
+                        if (args.length == 2 && args[1] instanceof PsiLiteralExpression) {
+                            String key = MoExpressionUtils.getText(args[0], true);
+                            if (key != null && pattern.matcher(key).find()) {
+                                String value = MoExpressionUtils.getLiteralInnerText(args[1]);
+                                if (value != null && isHighEntropyString(value)) {
+                                    holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+                                }
+                            }
                         }
                     }
                 }
