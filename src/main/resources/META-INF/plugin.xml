@@ -148,6 +148,13 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="hardcoded.credentials.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.HardcodedCredentials"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="WARNING"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="public.controller.on.spring.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PublicControllerOnSpring"
+        />
     </extensions>
 
     <application-components>
