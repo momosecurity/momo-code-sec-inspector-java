@@ -155,6 +155,13 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="public.controller.on.spring.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PublicControllerOnSpring"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="spring.session.fix.protection.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.SpringSessionFixProtection"
+        />
     </extensions>
 
     <application-components>
