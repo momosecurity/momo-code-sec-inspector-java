@@ -15,6 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
+import com.immomo.momosec.fix.DeleteElementQuickFix;
 import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
@@ -24,19 +25,19 @@ import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.resolve.graphInference.PsiPolyExpressionUtil;
+import com.intellij.psi.util.PsiLiteralUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * 1009: 固定的随机数种子风险
  *
- * ref: https://github.com/github/codeql/blob/main/java/ql/src/Security/CWE/CWE-335/PredictableSeed.qhelp
+ * ref: https://rules.sonarsource.com/java/type/Vulnerability/RSPEC-4347
  */
 public class PredictableSeed extends MomoBaseLocalInspectionTool {
     public static final String MESSAGE = InspectionBundle.message("predictable.seed.msg");
     private static final String QUICK_FIX_NAME = InspectionBundle.message("predictable.seed.fix");
-
-    private final PredictableSeedQuickFix predictableSeedQuickFix = new PredictableSeedQuickFix();
 
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
@@ -52,7 +53,22 @@ public class PredictableSeed extends MomoBaseLocalInspectionTool {
                                 expression,
                                 MESSAGE,
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                predictableSeedQuickFix
+                                new DeleteElementQuickFix(expression, QUICK_FIX_NAME)
+                        );
+                    }
+                }
+            }
+
+            @Override
+            public void visitNewExpression(PsiNewExpression expression) {
+                if (MoExpressionUtils.hasFullQualifiedName(expression, "java.security.SecureRandom")) {
+                    PsiExpressionList expressionList = expression.getArgumentList();
+                    if (expressionList != null && expressionList.getExpressions().length != 0) {
+                        holder.registerProblem(
+                                expression,
+                                MESSAGE,
+                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+                                new PredictableSeedQuickFix(expressionList)
                         );
                     }
                 }
@@ -62,6 +78,12 @@ public class PredictableSeed extends MomoBaseLocalInspectionTool {
 
     public static class PredictableSeedQuickFix implements LocalQuickFix {
 
+        private final SmartPsiElementPointer<PsiExpressionList> argList;
+
+        public PredictableSeedQuickFix(PsiExpressionList expressionList) {
+            this.argList = SmartPointerManager.createPointer(expressionList);
+        }
+
         @Override
         public @Nls(capitalization = Nls.Capitalization.Sentence) @NotNull String getFamilyName() {
             return QUICK_FIX_NAME;
@@ -69,11 +91,11 @@ public class PredictableSeed extends MomoBaseLocalInspectionTool {
 
         @Override
         public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-            PsiMethodCallExpression methodCall = (PsiMethodCallExpression)descriptor.getPsiElement();
-            PsiExpression[] args = methodCall.getArgumentList().getExpressions();
-            if (args.length > 0 && args[0]  instanceof PsiLiteralExpression) {
-                PsiLiteralExpression arg0 = (PsiLiteralExpression)args[0];
-                arg0.replace(JavaPsiFacade.getElementFactory(project).createExpressionFromText("System.currentTimeMillis()", null));
+            PsiExpressionList args = argList.getElement();
+            if (args != null) {
+                for(PsiExpression arg : args.getExpressions()) {
+                    arg.delete();
+                }
             }
         }
     }

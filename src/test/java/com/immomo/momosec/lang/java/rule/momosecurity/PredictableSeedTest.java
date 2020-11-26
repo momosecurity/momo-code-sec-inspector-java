@@ -18,11 +18,9 @@ package com.immomo.momosec.lang.java.rule.momosecurity;
 import com.immomo.momosec.lang.java.MomoJavaCodeInsightFixtureTestCase;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiExpression;
-import com.intellij.psi.PsiLiteralExpression;
-import com.intellij.psi.PsiMethodCallExpression;
+import com.intellij.psi.*;
 import com.intellij.testFramework.MockProblemDescriptor;
+import org.junit.Assert;
 
 public class PredictableSeedTest extends MomoJavaCodeInsightFixtureTestCase {
 
@@ -35,18 +33,15 @@ public class PredictableSeedTest extends MomoJavaCodeInsightFixtureTestCase {
 
     public void testQuickFix() {
         Project project = myFixture.getProject();
-        PsiMethodCallExpression compileMethodCall = (PsiMethodCallExpression) JavaPsiFacade.getElementFactory(project)
-                .createExpressionFromText("prng.setSeed(1L)", null);
+        PsiNewExpression newExpression = (PsiNewExpression) JavaPsiFacade.getElementFactory(project)
+                .createExpressionFromText("new SecureRandom(\"hello\".getBytes(\"us-ascii\"))", null);
 
 
         MockProblemDescriptor descriptor =
-                new MockProblemDescriptor(compileMethodCall, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
-        PredictableSeed.PredictableSeedQuickFix quickFix = new PredictableSeed.PredictableSeedQuickFix();
+                new MockProblemDescriptor(newExpression, "", ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+        PredictableSeed.PredictableSeedQuickFix quickFix = new PredictableSeed.PredictableSeedQuickFix(newExpression.getArgumentList());
         quickFix.applyFix(project, descriptor);
 
-        PsiExpression[] args = compileMethodCall.getArgumentList().getExpressions();
-        assert args.length > 0;
-        PsiExpression arg0 = args[0];
-        assert !(arg0 instanceof PsiLiteralExpression);
+        Assert.assertEquals(0, newExpression.getArgumentList().getExpressions().length);
     }
 }
