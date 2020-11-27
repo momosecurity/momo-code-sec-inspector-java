@@ -1,0 +1,24 @@
+<html>
+<body>
+<b>Momo 1024:</b> OpenSAML2 认证绕过风险 <br>
+<br>
+<p>SAML协议依赖XML格式以及底层XML分析器来工作。</p>
+<p>在不忽略XML注释的情况下，攻击者可以设法更改NameID字段以使用XML注释来标识用户身份。</p>
+<br>
+<p style="font-size: 10px;color: #d9534f;">错误实践:</p>
+<p style="font-size: 10px;">
+<pre>
+StaticBasicParserPool staticBasicParserPool = new StaticBasicParserPool();
+staticBasicParserPool<b style="color: #d9534f;">.setIgnoreComments(false)</b>;
+</pre>
+</p>
+<br>
+<p style="font-size: 10px;color: #629460;">最佳实践:</p>
+<p style="font-size: 10px;">
+<pre>
+StaticBasicParserPool staticBasicParserPool = new StaticBasicParserPool();
+staticBasicParserPool<b style="color: #629460;">.setIgnoreComments(true)</b>;
+</pre>
+</p>
+</body>
+</html>

@@ -18,17 +18,26 @@ package com.immomo.momosec.fix;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiLiteralExpression;
+import com.intellij.psi.*;
+import com.intellij.util.ObjectUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
-public class TrueArgToFalseQuickFix implements LocalQuickFix {
+public class SetBoolArgQuickFix implements LocalQuickFix {
     private final String QUICK_FIX_NAME;
+    private final Boolean b;
+    private SmartPsiElementPointer<PsiLiteralExpression> argPointer;
 
-    public TrueArgToFalseQuickFix(String name) {
+    public SetBoolArgQuickFix(String name, Boolean b) {
         this.QUICK_FIX_NAME = name;
+        this.b = b;
+        this.argPointer = null;
+    }
+
+    public SetBoolArgQuickFix(String name, Boolean b, PsiLiteralExpression arg) {
+        this.QUICK_FIX_NAME = name;
+        this.b = b;
+        this.argPointer = SmartPointerManager.createPointer(arg);
     }
 
     @Override
@@ -38,13 +47,16 @@ public class TrueArgToFalseQuickFix implements LocalQuickFix {
 
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-        if (!(descriptor.getPsiElement() instanceof PsiLiteralExpression)) {
-            return ;
+        if (this.argPointer == null) {
+            PsiLiteralExpression arg = ObjectUtils.tryCast(descriptor.getPsiElement(), PsiLiteralExpression.class);
+            if (arg == null) return ;
+            this.argPointer = SmartPointerManager.createPointer(arg);
         }
 
-        PsiLiteralExpression arg = (PsiLiteralExpression)descriptor.getPsiElement();
+        PsiLiteralExpression targetArg = this.argPointer.getElement();
+        if (targetArg == null) return ;
         PsiElementFactory factory = JavaPsiFacade.getElementFactory(project);
-        PsiLiteralExpression falseArg = (PsiLiteralExpression)factory.createExpressionFromText("false", null);
-        arg.replace(falseArg);
+        PsiLiteralExpression newArg = (PsiLiteralExpression)factory.createExpressionFromText(b.toString(), null);
+        targetArg.replace(newArg);
     }
 }
