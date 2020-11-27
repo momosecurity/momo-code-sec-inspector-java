@@ -70,7 +70,10 @@ IDEA插件市场搜索"**immomo**"安装。
 |1018|宽泛的CORS Allowed Origin设置|<font color="#6abe83">T</font>||
 |1019|SpringSecurity关闭Debug模式|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
 |1020|硬编码凭证风险|<font color="#6abe83">T</font>||
-
+|1021|"@RequestMapping" 方法应当为 "public"|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1022|Spring 会话固定攻击风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1023|不安全的伪随机数生成器|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
+|1024|OpenSAML2 认证绕过风险|<font color="#6abe83">T</font>|<font color="#6abe83">T</font>|
 
 
 ### 贡献代码

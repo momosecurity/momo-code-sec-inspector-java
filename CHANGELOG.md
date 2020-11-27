@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.13]
+
+### Added
+
+- 1021: PublicControllerOnSpring
+- 1022: SpringSessionFixProtection
+- 1023: ReplacePseudorandomGenerator
+- 1024: OpenSAML2IgnoreComment
+
+### Modify
+
+- 1009: support New SecureRandom Expression
+- Github issue#5 HardcodedCredentials support Property key
+- Replace TrueArgToFalseQuickFix by SetBoolArgQuickFix
+
 ## [x.12]
 
 ### Modify
