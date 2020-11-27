@@ -162,6 +162,13 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="spring.session.fix.protection.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.SpringSessionFixProtection"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="replace.pseudorandom.generator.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.ReplacePseudorandomGenerator"
+        />
     </extensions>
 
     <application-components>
