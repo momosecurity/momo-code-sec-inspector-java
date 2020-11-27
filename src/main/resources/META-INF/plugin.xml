@@ -148,6 +148,34 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="hardcoded.credentials.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.HardcodedCredentials"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="WARNING"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="public.controller.on.spring.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.PublicControllerOnSpring"
+        />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="spring.session.fix.protection.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.SpringSessionFixProtection"
+        />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="replace.pseudorandom.generator.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.ReplacePseudorandomGenerator"
+        />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="ERROR"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="open.saml2.ignore.comment.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.OpenSAML2IgnoreComment"
+        />
     </extensions>
 
     <application-components>

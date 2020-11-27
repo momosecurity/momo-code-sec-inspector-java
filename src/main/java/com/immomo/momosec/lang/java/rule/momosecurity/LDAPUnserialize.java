@@ -15,7 +15,7 @@
  */
 package com.immomo.momosec.lang.java.rule.momosecurity;
 
-import com.immomo.momosec.fix.TrueArgToFalseQuickFix;
+import com.immomo.momosec.fix.SetBoolArgQuickFix;
 import com.immomo.momosec.lang.InspectionBundle;
 import com.immomo.momosec.lang.MomoBaseLocalInspectionTool;
 import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
@@ -46,10 +46,10 @@ public class LDAPUnserialize extends MomoBaseLocalInspectionTool {
                             Boolean.TRUE.equals(((PsiLiteralExpression) args[4]).getValue())
                         ) {
                             holder.registerProblem(
-                                    args[4],
+                                    expression,
                                     MESSAGE,
                                     ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                    new TrueArgToFalseQuickFix(QUICK_FIX_NAME)
+                                    new SetBoolArgQuickFix(QUICK_FIX_NAME, false, (PsiLiteralExpression)args[4])
                             );
                         }
                     }
@@ -66,10 +66,10 @@ public class LDAPUnserialize extends MomoBaseLocalInspectionTool {
                         Boolean.TRUE.equals(((PsiLiteralExpression)args[0]).getValue())
                     ) {
                         holder.registerProblem(
-                                args[0],
+                                expression,
                                 MESSAGE,
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-                                new TrueArgToFalseQuickFix(QUICK_FIX_NAME)
+                                new SetBoolArgQuickFix(QUICK_FIX_NAME, false, (PsiLiteralExpression)args[0])
                         );
                     }
                 }
