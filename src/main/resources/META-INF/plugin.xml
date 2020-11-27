@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>Momo Code Sec Inspector (Java)</id>
     <name>Momo Code Sec Inspector (Java)</name>
-    <vendor email="mmsrc@immomo.com">https://security.immomo.com/</vendor>
+    <vendor email="mmsrc@immomo.com">immomo.com</vendor>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
