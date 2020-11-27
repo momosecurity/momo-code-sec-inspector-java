@@ -33,7 +33,7 @@ public class FeedbackAspect {
     @Before(
         "(" +
             "execution(* com.immomo.momosec.fix.ShowHelpCommentQuickFix.applyFix(..)) ||" +
-            "execution(* com.immomo.momosec.fix.TrueArgToFalseQuickFix.applyFix(..)) ||" +
+            "execution(* com.immomo.momosec.fix.SetBoolArgQuickFix.applyFix(..)) ||" +
             "execution(* com.immomo.momosec.lang.java.rule.*.*.*.applyFix(..)) ||" +
             "execution(* com.immomo.momosec.lang.xml.rule.*.*.*.applyFix(..))" +
         ") && args(*, descriptor)"
