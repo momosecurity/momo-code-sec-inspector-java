@@ -176,6 +176,13 @@
             bundle="com.immomo.momosec.bundle.InspectionBundle"     key="open.saml2.ignore.comment.name"
             implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.OpenSAML2IgnoreComment"
         />
+
+        <localInspection
+            language="JAVA"      groupPath="Java"
+            groupName="MomoSec"  enabledByDefault="true"     level="WARNING"
+            bundle="com.immomo.momosec.bundle.InspectionBundle"     key="hardcoded.ip.name"
+            implementationClass="com.immomo.momosec.lang.java.rule.momosecurity.HardcodedIp"
+        />
     </extensions>
 
     <application-components>
