@@ -21,7 +21,7 @@ import com.immomo.momosec.lang.java.utils.MoExpressionUtils;
 import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.intellij.util.ObjectUtils;
 import me.gosimple.nbvcxz.Nbvcxz;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +35,8 @@ import java.util.regex.Pattern;
  */
 public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
     public static final String MESSAGE = InspectionBundle.message("hardcoded.credentials.msg");
-    private static final Pattern pattern = Pattern.compile("(?i)passwd|pass|password|pwd|secret|token");
+    private static final Pattern pattern = Pattern.compile("passwd|pass|password|pwd|secret|token", Pattern.CASE_INSENSITIVE);
+    private static final Pattern connPwdPattern = Pattern.compile("password=(.*?)($|&)", Pattern.CASE_INSENSITIVE);
     private static final double entropyThreshold = 50.0;
     private static final int truncate = 16;
 
@@ -50,7 +51,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                      PsiExpression initializer = variable.getInitializer();
                      if (initializer instanceof PsiLiteralExpression) {
                          String value = MoExpressionUtils.getLiteralInnerText(initializer);
-                         if (value != null && isHighEntropyString(value)) {
+                         if (value != null && isHighEntropyString(value) && isASCII(value)) {
                              holder.registerProblem(variable, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                          }
                      }
@@ -66,7 +67,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                         PsiExpression rexp = expression.getRExpression();
                         if (rexp instanceof PsiLiteralExpression) {
                             String value = MoExpressionUtils.getLiteralInnerText(rexp);
-                            if (value != null && isHighEntropyString(value)) {
+                            if (value != null && isHighEntropyString(value) && isASCII(value)) {
                                 holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                             }
                         }
@@ -81,7 +82,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                     PsiExpression initializer = field.getInitializer();
                     if (initializer instanceof PsiLiteralExpression) {
                         String value = MoExpressionUtils.getLiteralInnerText(initializer);
-                        if (value != null && isHighEntropyString(value)) {
+                        if (value != null && isHighEntropyString(value) && isASCII(value)) {
                             holder.registerProblem(field, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                         }
                     }
@@ -101,10 +102,24 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                             String key = MoExpressionUtils.getText(args[0], true);
                             if (key != null && pattern.matcher(key).find()) {
                                 String value = MoExpressionUtils.getLiteralInnerText(args[1]);
-                                if (value != null && isHighEntropyString(value)) {
+                                if (value != null && isHighEntropyString(value) && isASCII(value)) {
                                     holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                                 }
                             }
+                        }
+                    }
+                } else if (MoExpressionUtils.hasFullQualifiedName(expression, "java.sql.DriverManager", "getConnection")) {
+                    // 检查0位参的连接串，或3位参的password字段
+                    PsiExpression[] args = expression.getArgumentList().getExpressions();
+                    if (args.length == 1) {
+                        String connUrl = MoExpressionUtils.getLiteralInnerText(ObjectUtils.tryCast(args[0], PsiLiteralExpression.class));
+                        if (connUrl != null && connPwdPattern.matcher(connUrl).find()) {
+                            holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+                        }
+                    } else if (args.length == 3) {
+                        PsiLiteralExpression password = ObjectUtils.tryCast(args[2], PsiLiteralExpression.class);
+                        if (password != null) {
+                            holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                         }
                     }
                 }
@@ -117,5 +132,19 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
             v = v.substring(0, truncate);
         }
         return new Nbvcxz().estimate(v).getEntropy() > entropyThreshold;
+    }
+
+    /**
+     * 判断该字符串是否以ascii组成
+     * @param text String
+     * @return boolean
+     */
+    private static boolean isASCII(String text){
+        for(int i = 0, l=text.length(); i < l; i++) {
+            if((int)text.charAt(i) > 128) {
+                return false;
+            }
+        }
+        return true;
     }
 }
