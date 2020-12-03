@@ -51,7 +51,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                      PsiExpression initializer = variable.getInitializer();
                      if (initializer instanceof PsiLiteralExpression) {
                          String value = MoExpressionUtils.getLiteralInnerText(initializer);
-                         if (value != null && isHighEntropyString(value)) {
+                         if (value != null && isHighEntropyString(value) && isASCII(value)) {
                              holder.registerProblem(variable, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                          }
                      }
@@ -67,7 +67,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                         PsiExpression rexp = expression.getRExpression();
                         if (rexp instanceof PsiLiteralExpression) {
                             String value = MoExpressionUtils.getLiteralInnerText(rexp);
-                            if (value != null && isHighEntropyString(value)) {
+                            if (value != null && isHighEntropyString(value) && isASCII(value)) {
                                 holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                             }
                         }
@@ -82,7 +82,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                     PsiExpression initializer = field.getInitializer();
                     if (initializer instanceof PsiLiteralExpression) {
                         String value = MoExpressionUtils.getLiteralInnerText(initializer);
-                        if (value != null && isHighEntropyString(value)) {
+                        if (value != null && isHighEntropyString(value) && isASCII(value)) {
                             holder.registerProblem(field, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                         }
                     }
@@ -102,7 +102,7 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
                             String key = MoExpressionUtils.getText(args[0], true);
                             if (key != null && pattern.matcher(key).find()) {
                                 String value = MoExpressionUtils.getLiteralInnerText(args[1]);
-                                if (value != null && isHighEntropyString(value)) {
+                                if (value != null && isHighEntropyString(value) && isASCII(value)) {
                                     holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
                                 }
                             }
@@ -132,5 +132,19 @@ public class HardcodedCredentials extends MomoBaseLocalInspectionTool {
             v = v.substring(0, truncate);
         }
         return new Nbvcxz().estimate(v).getEntropy() > entropyThreshold;
+    }
+
+    /**
+     * 判断该字符串是否以ascii组成
+     * @param text String
+     * @return boolean
+     */
+    private static boolean isASCII(String text){
+        for(int i = 0, l=text.length(); i < l; i++) {
+            if((int)text.charAt(i) > 128) {
+                return false;
+            }
+        }
+        return true;
     }
 }
