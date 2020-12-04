@@ -38,7 +38,7 @@ public class HardcodedIp extends MomoBaseLocalInspectionTool {
             @Override
             public void visitLiteralExpression(PsiLiteralExpression expression) {
                 IElementType type = expression.getFirstChild().getNode().getElementType();
-                if (type == JavaTokenType.STRING_LITERAL || type == JavaTokenType.RAW_STRING_LITERAL) {
+                if (type == JavaTokenType.STRING_LITERAL) {
                     Object v = expression.getValue();
                     if (v != null && isSensitiveIp(v.toString())) {
                         holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
