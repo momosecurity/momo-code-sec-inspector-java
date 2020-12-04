@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.14]
+
+### Added
+
+- 1025: HardcodedIp
+
+### Modify
+
+- 1020: support jdbc url and except not ASCII text
+- vendor change to immomo.com
+- add Chinese description
+
+### BugFix
+
+- aspect annotation support 'SetBoolArgQuickFix'
+
 ## [x.13]
 
 ### Added
