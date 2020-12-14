@@ -45,7 +45,7 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
     private static final String QUICK_FIX_NAME = InspectionBundle.message("mybatis.xml.sqli.fix");
 
     protected static final Set<String> ignoreVarName =
-            new HashSet<>(Arrays.asList("orderByClause", "pageStart", "pageSize", "criterion.condition"));
+            new HashSet<>(Arrays.asList("orderByClause", "pageStart", "pageSize", "criterion.condition", "alias"));
     private final MybatisXmlSQLiQuickFix mybatisXmlSQLiQuickFix = new MybatisXmlSQLiQuickFix();
 
     @NotNull
@@ -85,7 +85,9 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
                     }
 
                     String var = m.group(1);
-                    if (Boolean.FALSE.equals(ignoreVarName.contains(var))) {
+                    if (!ignoreVarName.contains(var) &&
+                        !var.startsWith("ew.")
+                    ) {
                         holder.registerProblem(text, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING, mybatisXmlSQLiQuickFix);
                         break;
                     }
