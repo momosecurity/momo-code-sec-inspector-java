@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.15]
+
+### Modify
+
+- 1004: Fix false positive on mybatis plus
+
 ## [x.14]
 
 ### Added

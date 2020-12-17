@@ -48,4 +48,19 @@
         </error></foreach>
     </update>
 
+    <select id="selectList" >
+        select * from TABLE
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+    <sql id="Base_Column_List">
+        ${alias}.DATA_ID
+    </sql>
+    <select id="selectList" >
+        select <include refid="Base_Column_List"><property name="alias" value="c"/></include>
+        from TABLE
+    </select>
+
 </mapper>
