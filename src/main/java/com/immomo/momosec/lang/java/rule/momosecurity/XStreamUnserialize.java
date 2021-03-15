@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 1011: XStream 反序列化风险
  *
- * com.thoughtworks.xstream:xstream < 1.4.11 时存在反序列化风险
+ * com.thoughtworks.xstream:xstream 默认情况下会存在反序列化风险
  *
  * ref:
  * http://x-stream.github.io/changes.html
@@ -171,7 +171,7 @@ public class XStreamUnserialize extends MomoBaseLocalInspectionTool {
                 aClass.addAfter(classInitializer, lastField);
             }
 
-            new ShowHelpCommentQuickFix("XStream", "// use xstream:1.4.11").applyFix(project, descriptor);
+            new ShowHelpCommentQuickFix("XStream", "// use xstream latest version, please").applyFix(project, descriptor);
         }
     }
 }
