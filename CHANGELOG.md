@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.16]
+
+### Modify
+
+- 1011: Change risk comment and description.
+
 ## [x.15]
 
 ### Modify
