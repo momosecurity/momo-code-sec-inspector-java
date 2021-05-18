@@ -24,8 +24,9 @@
 
 ### 版本支持
 
-Intellij IDEA ( Community / Ultimate )  \>= 2017.3
+Intellij IDEA ( Community / Ultimate )  \>= 2018.3
 
+**已停止对2017.\*的支持**
 
 
 ### 安装使用
