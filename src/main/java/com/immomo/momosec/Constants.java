@@ -15,32 +15,6 @@
  */
 package com.immomo.momosec;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class Constants {
-    public static String PLUGIN_VERSION = null;
-    public static String FEEDBACK_ENDPOINT = null;
-    public static String VULN_SIGN_WHITE_LIST_ENDPOINT = null;
-    public static String PLUGIN_ENV = "dev";
-    public static final Integer HTTP_TIMEOUT = 2000;
-
     public static final String SQL_INJECTION_HELP_COMMENT = "// 请查看示例 https://gist.github.com/retanoj/5fd369524a18ab68a4fe7ac5e0d121e8";
-
-    static {
-        Properties properties = new Properties();
-        InputStream in = Constants.class.getClassLoader().getResourceAsStream("properties/app.properties");
-        try {
-            if (in != null && !"true".equals(System.getenv("PLUGIN_BAN_CONST"))) {
-                properties.load(in);
-                FEEDBACK_ENDPOINT = properties.getProperty("feedback_endpoint", null);
-                VULN_SIGN_WHITE_LIST_ENDPOINT = properties.getProperty("vuln_sign_white_list_endpoint", null);
-                PLUGIN_VERSION = properties.getProperty("plugin_version", null);
-                PLUGIN_ENV = properties.getProperty("plugin_env", "dev");
-            }
-        } catch (IOException ignored) {
-
-        }
-    }
 }
