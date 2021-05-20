@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.17]
+
+### Modify
+
+- 1003: Ignore Mybatis wrapper "ew.*" segment
+- Optimize sql injection judgement
+- Remove unused code and dependencies
+
 ## [x.16]
 
 ### Modify
