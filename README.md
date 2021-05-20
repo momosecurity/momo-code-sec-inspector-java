@@ -31,11 +31,21 @@ Intellij IDEA ( Community / Ultimate )  \>= 2018.3
 
 ### 安装使用
 
+#### IDEA插件市场安装
+
 IDEA插件市场搜索"**immomo**"安装。
 
 <img src="static/install.jpg" height="400">
 
+#### 使用：方法一
 
+该插件会在您编码过程中自动扫描当前编辑的代码，并实时提醒安全风险。
+
+#### 使用：方法二
+
+IDEA 提供`Inspect Code`功能支持对整个项目/指定范围文件进行自定义规则的扫描。
+
+<img src="static/inspect-code.jpg" height="400">
 
 ### 效果展示
 
@@ -158,17 +168,13 @@ src
 
 #### 预发布打包
 
-1. PLUGIN_BAN_CONST=true ./gradlew --no-daemon clean build -PMOMO_CODE_SEC_INSPECTOR_ENV=pre
+1. ./gradlew --no-daemon clean build -PMOMO_CODE_SEC_INSPECTOR_ENV=pre
 2. build/distributions/*.zip 为待发布插件
-
-预发布情况下，插件上报地址写于`src/main/resources/properties/pre.properties`
 
 #### 发布打包
 
-1. PLUGIN_BAN_CONST=true ./gradlew --no-daemon clean build -PMOMO_CODE_SEC_INSPECTOR_ENV=prod
+1. ./gradlew --no-daemon clean build -PMOMO_CODE_SEC_INSPECTOR_ENV=prod
 2. build/distributions/*.zip 为待发布插件
-
-正式发布情况下，插件上报地址写于`src/main/resources/properties/prod.properties`
 
 
 
@@ -198,12 +204,6 @@ src
 |---|---|---|
 |2018.3|193|2018.3.* <= x|
 |2017.3|173|2017.3.* <= x <= 2018.2.*|
-
-- JetBrains Plugins Marketplace 版本
-
-发布到插件市场的版本不支持漏洞上报功能。
-
-发布到插件市场的版本不支持白名单签名下发功能。
 
 
 
