@@ -85,19 +85,7 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
     }
 
     private static boolean ignorePosition(String prefix, String var, String suffix) {
-        if (suffix.trim().startsWith("=") ||
-            suffix.trim().startsWith(">") ||
-            suffix.trim().startsWith("<")
-        ) {
-            // 暂时避免 where ${column} = #{var} 的问题
-            return true;
-        }
-
-        if (MybatisXmlSQLi.ignoreVarName.contains(var) || var.startsWith("ew.")) {
-            return true;
-        }
-
-        return false;
+        return MybatisXmlSQLi.ignoreVarName.contains(var) || var.startsWith("ew.");
     }
 
     public static class MybatisXmlSQLiQuickFix implements LocalQuickFix {

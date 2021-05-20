@@ -52,7 +52,7 @@ public class PolyadicExpressionSQLi extends BaseSQLi {
             @Override
             public void visitPolyadicExpression(PsiPolyadicExpression expression) {
                 List<PsiExpression> exps = MoExpressionUtils.deconPolyadicExpression(expression);
-                if (exps.isEmpty()) { return ; }
+                if (exps.isEmpty() || ignoreMethodName(expression)) { return ; }
 
                 String expStr = exps.stream()
                         .map(item -> MoExpressionUtils.getText(item, true))
@@ -68,17 +68,18 @@ public class PolyadicExpressionSQLi extends BaseSQLi {
                             if ( s == null ) {
                                 if ( !sb.toString().isEmpty() ) {
                                     sql_segments.add(sb.toString());
-                                    sb.delete(0, sb.length());
                                 }
 
                                 if (!MoExpressionUtils.isText(exp)) {
                                     hasVar = true;
                                 }
+
+                                sb.append(" ? ");
                             } else {
                                 sb.append(s);
                             }
                         } else {
-                            sb.append("?");
+                            sb.append(" ? ");
                         }
                     }
                     // 末段要 drop 掉，不用查
@@ -86,15 +87,12 @@ public class PolyadicExpressionSQLi extends BaseSQLi {
                     if (sql_segments.isEmpty() || Boolean.FALSE.equals(hasVar) || !hasEvalAdditive(sql_segments)) {
                         // 对于 "select * from " + getTable() + " where id = %s" 的情况
                         // getTable() 被忽略了，要考虑后面 %s 的问题
-                        if (hasPlaceholderProblem(expStr) && !ignoreMethodName(expression)) {
+                        if (hasPlaceholderProblem(expStr)) {
                             holder.registerProblem(expression, PlaceholderStringSQLi.MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING, showHelpCommentQuickFix);
                         }
                         return ;
                     }
-
-                    if (!ignoreMethodName(expression)) {
-                        holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING, showHelpCommentQuickFix);
-                    }
+                    holder.registerProblem(expression, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING, showHelpCommentQuickFix);
                 }
             }
 

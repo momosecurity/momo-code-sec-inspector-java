@@ -24,8 +24,8 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.siyeh.ig.psiutils.MethodCallUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class BaseSQLi extends MomoBaseLocalInspectionTool {
@@ -44,38 +44,28 @@ public abstract class BaseSQLi extends MomoBaseLocalInspectionTool {
     /**
      * 按 needle 拆分字符串后，判断拆分数组是否有拼接SQL注入风险
      * @param content String
-     * @param needle String
-     * @return boolean
-     */
-    protected boolean hasEvalAdditive(String content, String needle) {
-        List<String> list = new ArrayList<>(Arrays.asList(content.split(needle)));
-        if (content.endsWith(list.get(list.size() - 1))) {
-            list.remove(list.size() - 1);
-        }
-        return hasEvalAdditive(list);
-    }
-
-    /**
-     * 按 needle 拆分字符串后，判断拆分数组是否有拼接SQL注入风险
-     * @param content String
      * @param pattern Pattern
      * @return boolean
      */
     protected boolean hasEvalAdditive(String content, Pattern pattern) {
-        List<String> list = new ArrayList<>(Arrays.asList(pattern.split(content)));
-        if (content.endsWith(list.get(list.size() - 1))) {
-            list.remove(list.size() - 1);
+        Matcher m = pattern.matcher(content);
+        int offset = 0;
+        List<String> prefixes = new ArrayList<>();
+        while(m.find(offset)) {
+            prefixes.add(content.substring(0, m.start()));
+            offset = m.end();
         }
-        return hasEvalAdditive(list);
+        return hasEvalAdditive(prefixes);
     }
 
     /**
      * 判断数组是否有拼接SQL注入风险
-     * @param fragments List<String>
+     * @param prefixes List<String>
      * @return boolean
      */
-    protected boolean hasEvalAdditive(List<String> fragments) {
-        return SQLi.hasVulOnAdditiveFragments(fragments);
+    protected boolean hasEvalAdditive(List<String> prefixes) {
+        return prefixes.stream()
+                .anyMatch(prefix -> SQLi.hasVulOnSQLJoinStr(prefix, null, null));
     }
 
     protected boolean ignoreMethodName(PsiExpression expression) {

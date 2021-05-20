@@ -60,6 +60,10 @@ public class PlaceholderStringSQLi extends BaseSQLi {
                 if (!(args.length > 0)) {
                     return ;
                 }
+                if (ignoreMethodName(expression)) {
+                    return ;
+                }
+
                 int idx = 0;
                 PsiType arg0Type = args[idx].getType();
                 if (arg0Type != null && "Locale".equals(arg0Type.getPresentableText())) {
@@ -94,13 +98,12 @@ public class PlaceholderStringSQLi extends BaseSQLi {
                         sb.append(seg);
                         if (idx < args.length && isSqliCareExpression(args[idx])) {
                             concat_cont.add(sb.toString());
-                            sb.delete(0, sb.length());
-                        } else {
-                            sb.append("?");
                         }
+                        sb.append(" ? ");
                         idx += 1;
                     }
-                    if (hasEvalAdditive(concat_cont) && !ignoreMethodName(expression)) {
+
+                    if (hasEvalAdditive(concat_cont)) {
                         holder.registerProblem(
                                 expression,
                                 MESSAGE,

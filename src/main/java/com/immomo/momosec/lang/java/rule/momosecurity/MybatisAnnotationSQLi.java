@@ -128,19 +128,7 @@ public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
     }
 
     private static boolean ignorePosition(String prefix, String var, String suffix) {
-        if (suffix.trim().startsWith("=") ||
-            suffix.trim().startsWith(">") ||
-            suffix.trim().startsWith("<")
-        ) {
-            // 暂时避免 where ${column} = #{var} 的问题
-            return true;
-        }
-
-        if (var.startsWith("ew.")) {
-            return true;
-        }
-
-        return false;
+        return var.startsWith("ew.");
     }
 
     public static class MybatisAnnotationSQLiQuickFix implements LocalQuickFix {
