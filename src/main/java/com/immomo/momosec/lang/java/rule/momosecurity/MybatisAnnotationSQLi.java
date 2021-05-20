@@ -109,16 +109,38 @@ public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
             content = content.substring(8, content.length() - 9);
         }
 
-        List<String> fragments = new ArrayList<>(Arrays.asList(dollarVarPattern.split(content)));
-        if (fragments.size() == 1 && fragments.get(0).equals(content)) {
-            return false;
+        Matcher m = dollarVarPattern.matcher(content);
+        int offset = 0;
+        List<List<String>> fragments = new ArrayList<>();
+        while(m.find(offset)) {
+            String prefix = content.substring(0, m.start());
+            String var    = m.group(1);
+            String suffix = content.substring(m.end());
+            if (ignorePosition(prefix, var, suffix)) {
+                continue;
+            }
+            fragments.add(new ArrayList<String>(){{ add(prefix); add(var); add(suffix); }});
+
+            offset = m.end();
         }
 
-        if (fragments.size() > 1) {
-            fragments.remove(fragments.size() - 1);
+        return SQLi.hasVulOnSQLJoinStrList(fragments);
+    }
+
+    private static boolean ignorePosition(String prefix, String var, String suffix) {
+        if (suffix.trim().startsWith("=") ||
+            suffix.trim().startsWith(">") ||
+            suffix.trim().startsWith("<")
+        ) {
+            // 暂时避免 where ${column} = #{var} 的问题
+            return true;
         }
 
-        return SQLi.hasVulOnAdditiveFragments(fragments);
+        if (var.startsWith("ew.")) {
+            return true;
+        }
+
+        return false;
     }
 
     public static class MybatisAnnotationSQLiQuickFix implements LocalQuickFix {
@@ -165,8 +187,9 @@ public class MybatisAnnotationSQLi extends MomoBaseLocalInspectionTool {
             if(m.find(offset)) {
                 String prefix = content.substring(0, m.start());
                 String suffix = content.substring(m.end());
+                String var = m.group(1);
                 String inner = m.group();
-                if (SQLi.hasVulOnAdditiveFragments(Collections.singletonList(prefix))) {
+                if (!ignorePosition(prefix, var, suffix) && SQLi.hasVulOnSQLJoinStr(prefix, var, suffix)) {
                     String lowerPrefix = prefix.toLowerCase();
                     if (whereInEndPattern.matcher(lowerPrefix).find()) {
                         // where in 不处理

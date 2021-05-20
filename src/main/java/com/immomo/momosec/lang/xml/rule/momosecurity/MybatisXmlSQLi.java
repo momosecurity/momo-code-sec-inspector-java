@@ -68,32 +68,36 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
                 String _text = text.getValue();
                 if (_text.isEmpty() || !_text.contains("${")) { return ; }
 
-                List<String> fragments = new ArrayList<>(Arrays.asList(dollarVarPattern.split(_text)));
-                if (fragments.size() == 1 && fragments.get(0).equals(_text)) { return ; }
-                if (fragments.size() > 1) { fragments.remove(fragments.size()-1); }
-                if (Boolean.FALSE.equals(SQLi.hasVulOnAdditiveFragments(fragments))) { return ; }
-
                 Matcher m = dollarVarPattern.matcher(_text);
-                while(m.find()) {
-                    String suffix = _text.substring(m.end()).trim();
-                    if (suffix.startsWith("=") ||
-                        suffix.startsWith(">") ||
-                        suffix.startsWith("<")
-                    ) {
-                        // 暂时避免 (where|and|or) ${column} = #{var} 的问题
-                        continue;
-                    }
-
-                    String var = m.group(1);
-                    if (!ignoreVarName.contains(var) &&
-                        !var.startsWith("ew.")
-                    ) {
+                int offset = 0;
+                while (m.find(offset)) {
+                    String prefix = _text.substring(0, m.start());
+                    String var    = m.group(1);
+                    String suffix = _text.substring(m.end());
+                    if (!ignorePosition(prefix, var, suffix) && SQLi.hasVulOnSQLJoinStr(prefix, var, suffix)) {
                         holder.registerProblem(text, MESSAGE, ProblemHighlightType.GENERIC_ERROR_OR_WARNING, mybatisXmlSQLiQuickFix);
                         break;
                     }
+                    offset = m.end();
                 }
             }
         };
+    }
+
+    private static boolean ignorePosition(String prefix, String var, String suffix) {
+        if (suffix.trim().startsWith("=") ||
+            suffix.trim().startsWith(">") ||
+            suffix.trim().startsWith("<")
+        ) {
+            // 暂时避免 where ${column} = #{var} 的问题
+            return true;
+        }
+
+        if (MybatisXmlSQLi.ignoreVarName.contains(var) || var.startsWith("ew.")) {
+            return true;
+        }
+
+        return false;
     }
 
     public static class MybatisXmlSQLiQuickFix implements LocalQuickFix {
@@ -115,20 +119,9 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
             while(m.find(offset)) {
                 String prefix = v.substring(0, m.start());
                 String suffix = v.substring(m.end());
+                String var    = m.group(1);
 
-                if (suffix.trim().startsWith("=") ||
-                    suffix.trim().startsWith(">") ||
-                    suffix.trim().startsWith("<")
-                ) {
-                    // 暂时避免 where ${column} = #{var} 的问题
-                    offset = m.end();
-                    continue;
-                }
-                if (MybatisXmlSQLi.ignoreVarName.contains(m.group(1))) {
-                    offset = m.end();
-                    continue;
-                }
-                if (!SQLi.hasVulOnAdditiveFragments(Collections.singletonList(prefix))) {
+                if (ignorePosition(prefix, var, suffix) || !SQLi.hasVulOnSQLJoinStr(prefix, var, suffix)) {
                     offset = m.end();
                     continue;
                 }

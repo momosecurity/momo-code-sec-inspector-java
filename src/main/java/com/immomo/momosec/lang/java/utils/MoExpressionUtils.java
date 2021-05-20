@@ -100,7 +100,8 @@ public class MoExpressionUtils {
 
         if (value == null && (
             TypeConversionUtil.isPrimitiveAndNotNull(expression.getType()) ||
-            PsiUtil.isConstantExpression(expression)
+            PsiUtil.isConstantExpression(expression) &&
+            !(expression instanceof PsiPolyadicExpression)
         )) {
             value = expression.getText();
         }
