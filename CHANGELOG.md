@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.18]
+
+### BugFix
+
+- Mybatis XML prefix bug of \${var}
+
 ## [x.17]
 
 ### Modify
