@@ -18,10 +18,10 @@ package com.immomo.momosec.utils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SQLi {
 
@@ -60,9 +60,13 @@ public class SQLi {
      * @return boolean
      */
     public static boolean hasVulOnSQLJoinStr(@NotNull String prefix, @Nullable String var, @Nullable String suffix) {
-        List<String> fragments = new ArrayList<>(Arrays.asList(prefix.split("(\\s+|\\()")));
+        List<String> fragments = Arrays.stream(prefix.split("[\\s|(]+"))
+                .map(String::trim)
+                .filter(item -> !item.isEmpty())
+                .collect(Collectors.toList());
         int seg_size = fragments.size();
-        if (fragments.get(seg_size - 1).trim().endsWith("=") ||
+        if (seg_size == 0 ||
+            fragments.get(seg_size - 1).trim().endsWith("=") ||
             fragments.get(seg_size - 1).trim().endsWith(">=") ||
             fragments.get(seg_size - 1).trim().endsWith("<=")
         ) {

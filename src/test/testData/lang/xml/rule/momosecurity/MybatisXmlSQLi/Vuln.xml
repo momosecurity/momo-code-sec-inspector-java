@@ -63,4 +63,5 @@
         from TABLE
     </select>
 
+    <select id="Empty_Prefix"><error descr="MomoSec: Mybatis XML SQL注入漏洞">(${fullSQL})</error></select>
 </mapper>
