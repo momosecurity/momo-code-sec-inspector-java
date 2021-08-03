@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.19]
+
+### BugFix
+
+- Mybatis XML whereIn contains blank
+
 ## [x.18]
 
 ### BugFix
