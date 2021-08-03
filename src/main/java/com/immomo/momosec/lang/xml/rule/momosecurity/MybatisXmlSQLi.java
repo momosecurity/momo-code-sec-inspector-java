@@ -117,8 +117,11 @@ public class MybatisXmlSQLi extends MomoBaseLocalInspectionTool {
                 if (whereInEndPattern.matcher(prefix).find()) {
                     // where in 型
                     if (Str.rtrim(prefix).endsWith("(") && Str.ltrim(suffix).startsWith(")")) {
-                        prefix = Str.rtrim(prefix).substring(0, prefix.length()-1);
-                        suffix = Str.ltrim(suffix).substring(1);
+                        prefix = Str.rtrim(prefix);
+                        suffix = Str.ltrim(suffix);
+
+                        prefix = prefix.substring(0, prefix.length()-1);
+                        suffix = suffix.substring(1);
                     }
                     XmlTag parent  = xmlText.getParentTag();
                     if (parent != null) {

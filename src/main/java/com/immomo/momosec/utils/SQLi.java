@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class SQLi {
 
-    public static final Pattern whereInEndPattern          = Pattern.compile("(where|and|or)\\s+\\S+?\\s+in\\s*\\(?$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern whereInEndPattern          = Pattern.compile("(where|and|or)\\s+\\S+?\\s+in\\s*\\(?\\s*$", Pattern.CASE_INSENSITIVE);
     public static final Pattern likeEndPatterh             = Pattern.compile("\\S+?\\s+like\\s+('|\")%?$", Pattern.CASE_INSENSITIVE);
 
     public static final Pattern placeholderPattern         = Pattern.compile("%(\\d\\$\\d{0,5})?s", Pattern.CASE_INSENSITIVE);

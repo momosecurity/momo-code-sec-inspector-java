@@ -100,6 +100,16 @@ public class MybatisXmlSQLiTest extends MomoXmlCodeInsightFixtureTestCase {
         );
     }
 
+    public void testWhereInWithQuoteAndBlankQuickFix() {
+        commonWhereInReplaceTest(
+                "where id in ( ${ids} )",
+                "where id in \n" +
+                "<foreach collection=\"ids\" item=\"idsItem\" open=\"(\" separator=\",\" close=\")\">\n" +
+                "#{idsItem}\n" +
+                "</foreach>\n"
+        );
+    }
+
     public void testLikeQuickFix() {
         commonHashReplaceTest(
                 "where id = \"${id}\" and name like '%${name}%'",
