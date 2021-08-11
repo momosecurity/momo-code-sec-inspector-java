@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Main version site uses 'x' stand for idea main version. 
 
+## [x.20]
+
+### BugFix
+
+- PlaceholderStringSQLi fix literal placeholder
+
 ## [x.19]
 
 ### BugFix

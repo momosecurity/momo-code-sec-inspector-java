@@ -8,6 +8,10 @@ public class Vuln {
 
         <error descr="MomoSec: 疑似占位符拼接SQL注入漏洞">String.format("select * from table where id = %s", id)</error>;
         <error descr="MomoSec: 疑似占位符拼接SQL注入漏洞">String.format("select * from table where id = %1$s and status = 0", id)</error>;
+        String.format("select * from user where token='%s'", "selftoken");
+
+        String lit = "lit";
+        String.format("select * from table where lit='%s'", lit);
 
         String.format("insert into %s (%s) values(?,?)", table, fields);
 

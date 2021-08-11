@@ -23,6 +23,7 @@ import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
 import com.siyeh.ig.psiutils.ExpressionUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,18 +70,7 @@ public class PlaceholderStringSQLi extends BaseSQLi {
                 if (arg0Type != null && "Locale".equals(arg0Type.getPresentableText())) {
                     idx += 1;
                 }
-                String content = null;
-                if (ExpressionUtils.isLiteral(args[idx])) {
-                    content = MoExpressionUtils.getLiteralInnerText(args[idx]);
-                } else {
-                    PsiLocalVariable localVariable = ExpressionUtils.resolveLocalVariable(args[idx]);
-                    if (localVariable != null) {
-                        PsiExpression localVariableInitializer = localVariable.getInitializer();
-                        if (localVariableInitializer != null && ExpressionUtils.isLiteral(localVariableInitializer)) {
-                            content = MoExpressionUtils.getLiteralInnerText(localVariableInitializer);
-                        }
-                    }
-                }
+                String content = getLiteralOrVariableLiteral(args[idx]);
 
                 if (content != null &&
                     placeholderPattern.matcher(content).find() &&
@@ -96,7 +86,10 @@ public class PlaceholderStringSQLi extends BaseSQLi {
                     idx += 1;
                     for(String seg : split_cont_by_placeholder) {
                         sb.append(seg);
-                        if (idx < args.length && isSqliCareExpression(args[idx])) {
+                        if (idx < args.length &&
+                            isSqliCareExpression(args[idx]) &&
+                            getLiteralOrVariableLiteral(args[idx]) == null
+                        ) {
                             concat_cont.add(sb.toString());
                         }
                         sb.append(" ? ");
@@ -114,5 +107,22 @@ public class PlaceholderStringSQLi extends BaseSQLi {
                 }
             }
         };
+    }
+
+    @Nullable
+    private String getLiteralOrVariableLiteral(@Nullable PsiExpression expression) {
+        String content = null;
+        if (ExpressionUtils.isLiteral(expression)) {
+            content = MoExpressionUtils.getLiteralInnerText(expression);
+        } else {
+            PsiLocalVariable localVariable = ExpressionUtils.resolveLocalVariable(expression);
+            if (localVariable != null) {
+                PsiExpression localVariableInitializer = localVariable.getInitializer();
+                if (localVariableInitializer != null && ExpressionUtils.isLiteral(localVariableInitializer)) {
+                    content = MoExpressionUtils.getLiteralInnerText(localVariableInitializer);
+                }
+            }
+        }
+        return content;
     }
 }
