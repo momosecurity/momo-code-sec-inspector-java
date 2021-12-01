@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 1007: Fastjson反序列化风险
  *
- * com.fasterxml.jackson.core:jackson-databind 在开启DefaultTyping时，存在反序列化风险
+ * com.alibaba:fastjson 在开启AutoTypeSupport时，存在反序列化风险
  *
  * 程序内开启方法
  * (1) ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
