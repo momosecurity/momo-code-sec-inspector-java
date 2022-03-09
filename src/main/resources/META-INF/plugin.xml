@@ -8,7 +8,8 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.modules.xml</depends>
-    <depends>Git4Idea</depends>
+    <depends>com.intellij.properties</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
 
     <description><![CDATA[
     Replaced by description.html .....................
@@ -187,7 +188,7 @@
 
     <application-components>
 <!--        <component>-->
-<!--            <implementation-class>com.immomo.momosec.VulnSignWhiteListService</implementation-class>-->
+<!--            <implementation-class></implementation-class>-->
 <!--        </component>-->
     </application-components>
 

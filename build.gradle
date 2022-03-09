@@ -44,11 +44,13 @@ intellij {
         /* since 2019.2 Java is a separate plugin, hence we have to specify it implicitly */
         plugins = [
             'java',
-            'git4idea'
+            'properties',
+            'yaml'
         ]
     } else {
         plugins = [
-            'git4idea'
+            'properties',
+            'yaml'
         ]
     }
 }
